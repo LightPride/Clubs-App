@@ -1,0 +1,29 @@
+:root {
+  --background-color: #2f303a;
+  --primary-color: #ffffff;
+}
+body {
+  color: var(--primary-color);
+  background-color: var(--background-color);
+}
+
+p,
+h1,
+h2,
+h3,
+h4 {
+  margin: 0px;
+}
+
+ul,
+ol {
+  margin: 0px;
+  padding-left: 0px;
+  list-style: none;
+}
+
+img {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}

@@ -1,0 +1,25 @@
+{
+  "name": "clubs-app",
+  "version": "1.0.0",
+  "description": "SPA for saving clubs and clients",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/LightPride/Clubs-App.git"
+  },
+  "author": "LightPride",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/LightPride/Clubs-App/issues"
+  },
+  "homepage": "https://github.com/LightPride/Clubs-App#readme",
+  "devDependencies": {
+    "@eslint/js": "^9.2.0",
+    "eslint": "^9.2.0",
+    "globals": "^15.2.0",
+    "prettier": "3.2.5"
+  }
+}
