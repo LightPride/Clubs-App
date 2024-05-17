@@ -1,6 +1,6 @@
 function Header() {
   var header = $(
-    '<header id="header" class="navbar navbar-expand-lg bg-dark sticky-top"></header>'
+    '<header id="header" class="navbar navbar-expand-lg bg-dark sticky-top mb-5"></header>'
   );
 
   var nav = $(

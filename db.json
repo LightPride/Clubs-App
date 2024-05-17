@@ -1,0 +1,94 @@
+{
+  "clubs": [
+    {
+      "id": "C7H3G9K",
+      "name": "Golden Night",
+      "location": "New York",
+      "clients": [
+        { "name": "Alice", "age": 25 },
+        { "name": "Bob", "age": 30 },
+        { "name": "Charlie", "age": 35 }
+      ]
+    },
+    {
+      "id": "B4J6K2D",
+      "name": "Dance Zone",
+      "location": "Los Angeles",
+      "clients": [
+        { "name": "David", "age": 40 },
+        { "name": "Eva", "age": 45 },
+        { "name": "Frank", "age": 19 }
+      ]
+    },
+    {
+      "id": "R2P8F9L",
+      "name": "Night Palace",
+      "location": "Chicago",
+      "clients": [
+        { "name": "Grace", "age": 25 },
+        { "name": "Helen", "age": 23 },
+        { "name": "Ivan", "age": 22 }
+      ]
+    },
+    {
+      "id": "Y5T9E1M",
+      "name": "Drunk Arena",
+      "location": "Miami",
+      "clients": [
+        { "name": "Jack", "age": 28 },
+        { "name": "Kate", "age": 33 },
+        { "name": "Liam", "age": 38 }
+      ]
+    },
+    {
+      "id": "W3Q7Z1N",
+      "name": "Rave Mansion",
+      "location": "San Francisco",
+      "clients": [
+        { "name": "Mia", "age": 22 },
+        { "name": "Noah", "age": 27 },
+        { "name": "Olivia", "age": 32 }
+      ]
+    },
+    {
+      "id": "D8S2X6P",
+      "name": "Premial",
+      "location": "Houston",
+      "clients": [
+        { "name": "Sophia", "age": 23 },
+        { "name": "William", "age": 28 },
+        { "name": "Isabella", "age": 33 }
+      ]
+    },
+    {
+      "id": "L9M1H7A",
+      "name": "Club Rave",
+      "location": "Dallas",
+      "clients": [
+        { "name": "Liam", "age": 31 },
+        { "name": "Emma", "age": 36 },
+        { "name": "Alexander", "age": 41 }
+      ]
+    },
+    {
+      "id": "G6K4P3T",
+      "name": "Prestige",
+      "location": "Seattle",
+      "clients": [
+        { "name": "Ava", "age": 29 },
+        { "name": "James", "age": 34 },
+        { "name": "Sophia", "age": 39 }
+      ]
+    },
+    {
+      "id": "Z1N9Y5J",
+      "name": "Elite",
+      "location": "Boston",
+      "clients": [
+        { "name": "Logan", "age": 26 },
+        { "name": "Avery", "age": 31 },
+        { "name": "Elijah", "age": 36 }
+      ]
+    }
+  ]
+}
