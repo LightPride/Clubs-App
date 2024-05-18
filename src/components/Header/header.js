@@ -10,7 +10,7 @@ function Header() {
 
   var logo = $(
     '<a class="navbar-brand" href="/"><span class="logo">ClubsApp</span></a>'
-  );
+  ).on('click', () => console.log(123));
 
   var homeLink = $('<a class="navigation__link" href="/">Home</a>');
 

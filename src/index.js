@@ -1,5 +1,11 @@
 import Header from './components/Header/header.js';
-import ClubsCatalogue from './components/ClubsCatalogue/clubs-catalogue.js';
-import CataloguePage from './pages/catalogue.js';
+import ClubsForm from './components/СlubsForm/clubsForm.js';
+import CataloguePage from './pages/cataloguePage.js';
+import ClubsFormPage from './pages/clubsFormPage.js';
 
-$('#app').prepend(Header()).append(CataloguePage(ClubsCatalogue()));
+$('#app').prepend(Header());
+CataloguePage();
+// ClubsFormPage();
+// $('#clubForm').on('submit', function (event) {
+//   event.preventDefault();
+// });
