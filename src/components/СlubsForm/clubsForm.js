@@ -1,6 +1,12 @@
-import { createClubs } from '../../api/index.js';
+import { createClub, fetchClub, updateClub } from '../../api/index.js';
 
-function ClubsForm() {
+function ClubsForm(id) {
+  if (id) {
+    fetchClub(id, function (data) {
+      $('#clubName').val(data.name);
+      $('#clubLocation').val(data.location);
+    });
+  }
   var form = $('<form id="clubForm"></form>');
   var nameInput = $(
     '<div class="mb-3"><label for="clubName" class="form-label">Club Name</label><input type="text" id="clubName" class="form-control"><div id="clubNameCheck" class="form-text"></div></div>'
@@ -25,13 +31,15 @@ function ClubsForm() {
         return;
       }
       var data = {
-        id: Date.now().toString(),
         name: $('#clubName').val(),
         location: $('#clubLocation').val(),
-        clients: [],
       };
       console.log(data);
-      createClubs(data);
+      if (id) {
+        updateClub(id, data);
+      } else {
+        createClub(data);
+      }
     })
     .append(nameInput)
     .append($(locationInput))
@@ -40,7 +48,7 @@ function ClubsForm() {
 
 function validateClubName() {
   let clubNameValue = $('#clubName').val();
-  if (clubNameValue.length < 3 || clubNameValue.length > 10) {
+  if (clubNameValue.length < 3 || clubNameValue.length > 20) {
     $('#clubNameCheck').show();
     $('#clubNameCheck').html('length of club name must be between 3 and 10');
 
@@ -52,7 +60,7 @@ function validateClubName() {
 
 function validateClubLocation() {
   let clubLocationValue = $('#clubLocation').val();
-  if (clubLocationValue.length < 3 || clubLocationValue.length > 10) {
+  if (clubLocationValue.length < 3 || clubLocationValue.length > 20) {
     $('#clubLocationCheck').show();
     $('#clubLocationCheck').html(
       'length of club location  must be between 3 and 10'

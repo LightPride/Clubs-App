@@ -1,34 +1,61 @@
-import { fetchClubs } from '../../api/index.js';
+import { deleteClub, fetchClubs } from '../../api/index.js';
 
 function ClubsCatalogue() {
   fetchClubs(function (data) {
-    console.log(data);
     if (data) {
-      console.log(data);
       renderCatalogue(data);
     } else {
       return;
     }
   });
 
-  return '<div id="catalogue" class="row row-cols-1 row-cols-md-3 g-4"></div>';
+  return $(
+    '<div id="catalogue" class="row row-cols-1 row-cols-md-3 g-4"></div>'
+  );
 }
 
 function renderCatalogue(clubs) {
-  var clubsList = '';
   for (var i = 0; i < clubs.length; i += 1) {
     var club = clubs[i];
-    clubsList +=
-      '<div> <div class="card"> <div class="card-body"><h5 class="card-title">' +
-      club.name +
-      '</h5> <p>' +
-      club.location +
-      '</p><a href="/clubs/' +
-      club.id +
-      ' " class="btn btn-primary">View info</a></div></div></div>';
-  }
 
-  $('#catalogue').append($(clubsList));
+    $('#catalogue').append(
+      $('<div id="' + club.id + '"></div>').append(
+        $('<div class="card"></div>').append(
+          $('<div class="card-body"></div>')
+            .append($('<h5 class="card-title">' + club.name + '</h5>'))
+            .append($('<p>' + club.location + '</p>'))
+            .append(
+              $(
+                '<a href="#clubs/' +
+                  club.id +
+                  '" class="btn btn-primary me-5 mb-2">View info</a>'
+              )
+            )
+            .append(
+              $(
+                '<a href="#clubs/' +
+                  club.id +
+                  '/clients" class="btn btn-primary me-5 mb-2">View clients</a>'
+              )
+            )
+            .append(
+              $(
+                '<a href="#clubs/' +
+                  club.id +
+                  '/update" class="btn btn-primary me-5 mb-2">Update</a>'
+              )
+            )
+            .append(
+              $(
+                '<button type="button" class="btn btn-primary">Delete</button>'
+              ).on('click', function () {
+                deleteClub(club.id);
+              })
+            )
+        )
+      )
+    );
+  }
 }
 
 export default ClubsCatalogue;
