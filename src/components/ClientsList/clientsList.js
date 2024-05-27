@@ -1,9 +1,9 @@
-import { fetchClients } from '../../api/index.js';
+import { deleteClient, fetchClients } from '../../api/index.js';
 
-function ClientsList(id) {
+function ClientsList(clubId) {
   fetchClients(function (data) {
     if (data) {
-      renderClients(data, id);
+      renderClients(data, clubId);
     } else {
       return;
     }
@@ -12,31 +12,49 @@ function ClientsList(id) {
   return $('<div id="clientsList" class="list-group"></div>');
 }
 
-function filterClients(clients, id) {
+function filterClients(clients, clubId) {
   var filteredClients = clients.filter(function (client) {
-    return client.club === id;
+    return client.clubId === clubId;
   });
   return filteredClients;
 }
 
-function renderClients(clients, id) {
-  var filteredClients = filterClients(clients, id);
+function renderClients(clients, clubId) {
+  var filteredClients = filterClients(clients, clubId);
 
   for (var i = 0; i < filteredClients.length; i += 1) {
     var client = filteredClients[i];
 
     $('#clientsList').append(
-      $('<a href="#" class="list-group-item list-group-item-action"></a>')
+      $('<div class="list-group-item list-group-item-action"></div>')
         .append(
           $(
-            '<h5 class="mb-1">' +
+            '<span class="fw-bold fs-5">' +
               client.firstName +
-              ' ' +
+              '</span> <span class="fw-bold fs-5">' +
               client.lastName +
-              '</h5>'
+              '</span>'
           )
         )
+        .append($('<p class="mb-1">' + client.age + ' yrs</p>'))
         .append($('<p class="mb-1">I am a teapot</p>'))
+        .append(
+          $(
+            '<a href="#clubs/' +
+              clubId +
+              '/clients/' +
+              client.id +
+              '/update" class="btn btn-primary me-2">Update</a>'
+          )
+        )
+        .append(
+          $('<button type="button" class="btn btn-danger">Delete</button>').on(
+            'click',
+            function () {
+              deleteClient(client.id);
+            }
+          )
+        )
     );
   }
 }

@@ -1,8 +1,8 @@
 import { createClub, fetchClub, updateClub } from '../../api/index.js';
 
-function ClubsForm(id) {
-  if (id) {
-    fetchClub(id, function (data) {
+function ClubsForm(clubId) {
+  if (clubId) {
+    fetchClub(clubId, function (data) {
       $('#clubName').val(data.name);
       $('#clubLocation').val(data.location);
     });
@@ -12,7 +12,7 @@ function ClubsForm(id) {
     '<div class="mb-3"><label for="clubName" class="form-label">Club Name</label><input type="text" id="clubName" class="form-control"><div id="clubNameCheck" class="form-text"></div></div>'
   );
   var locationInput = $(
-    '<div class="mb-3"><label for="clubLocation" class="form-label">Club location</label><input type="text" class="form-control" id="clubLocation"><div id="clubLocationCheck" class="form-text"></div></div></div>'
+    '<div class="mb-3"><label for="clubLocation" class="form-label">Club location</label><input type="text" id="clubLocation" class="form-control"><div id="clubLocationCheck" class="form-text"></div></div>'
   );
   var button = $(
     '<button "type="submit" class="btn btn-primary">Submit</button>'
@@ -21,8 +21,6 @@ function ClubsForm(id) {
   return form
     .on('submit', function (event) {
       event.preventDefault();
-      console.log('Handler for `submit` called.');
-      console.log(validateClubName());
 
       if (!validateClubName()) {
         return;
@@ -34,9 +32,8 @@ function ClubsForm(id) {
         name: $('#clubName').val(),
         location: $('#clubLocation').val(),
       };
-      console.log(data);
-      if (id) {
-        updateClub(id, data);
+      if (clubId) {
+        updateClub(clubId, data);
       } else {
         createClub(data);
       }
@@ -47,7 +44,7 @@ function ClubsForm(id) {
 }
 
 function validateClubName() {
-  let clubNameValue = $('#clubName').val();
+  var clubNameValue = $('#clubName').val();
   if (clubNameValue.length < 3 || clubNameValue.length > 20) {
     $('#clubNameCheck').show();
     $('#clubNameCheck').html('length of club name must be between 3 and 10');
@@ -59,11 +56,11 @@ function validateClubName() {
 }
 
 function validateClubLocation() {
-  let clubLocationValue = $('#clubLocation').val();
+  var clubLocationValue = $('#clubLocation').val();
   if (clubLocationValue.length < 3 || clubLocationValue.length > 20) {
     $('#clubLocationCheck').show();
     $('#clubLocationCheck').html(
-      'length of club location  must be between 3 and 10'
+      'length of club location must be between 3 and 10'
     );
 
     return false;

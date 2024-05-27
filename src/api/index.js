@@ -82,12 +82,53 @@ export function fetchClients(callback) {
   });
 }
 
+export function fetchClient(id, callback) {
+  $.ajax({
+    url: 'http://localhost:3000/clients/' + id,
+    method: 'GET',
+    dataType: 'json',
+    success: function (data) {
+      callback(data);
+    },
+    error: function (error) {
+      console.error('Error fetching data:', error);
+    },
+  });
+}
+
 export function createClient(data) {
   $.ajax({
     url: 'http://localhost:3000/clients',
     method: 'POST',
     dataType: 'json',
     data: JSON.stringify(data),
+    success: function (data) {
+      console.log(data);
+    },
+    error: function (error) {
+      console.error('Error fetching data:', error);
+    },
+  });
+}
+
+export function updateClient(id, data) {
+  $.ajax({
+    url: 'http://localhost:3000/clients/' + id,
+    method: 'PATCH',
+    dataType: 'json',
+    data: JSON.stringify(data),
+    success: function (data) {},
+    error: function (error) {
+      console.error('Error fetching data:', error);
+    },
+  });
+}
+
+export function deleteClient(id) {
+  $.ajax({
+    url: 'http://localhost:3000/clients/' + id,
+    method: 'DELETE',
+    dataType: 'json',
     success: function (data) {
       console.log(data);
     },

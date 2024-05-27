@@ -1,5 +1,6 @@
 import Header from './components/Header/header.js';
 import CataloguePage from './pages/cataloguePage.js';
+import ClientFormPage from './pages/clientFormPage.js';
 import ClientsPage from './pages/clientsPage.js';
 import ClubItemPage from './pages/clubItemPage.js';
 import ClubsFormPage from './pages/clubsFormPage.js';
@@ -41,7 +42,6 @@ var Router = {
         return null;
       }
     }
-
     return { params: params };
   },
   register: function (path, callback) {
@@ -50,7 +50,7 @@ var Router = {
 };
 
 function homeRoute() {
-  $('#main').html('dick');
+  $('#main').html('Welcome to ClubsApp');
 }
 
 function catalogueRoute() {
@@ -61,21 +61,25 @@ function createClubRoute() {
   $('#main').html(ClubsFormPage());
 }
 
-function viewClubRoute(id) {
-  $('#main').html(ClubItemPage(id));
+function viewClubRoute(clubId) {
+  $('#main').html(ClubItemPage(clubId));
 }
 
-function updateClubRoute(id) {
-  $('#main').html(ClubsFormPage(id));
+function updateClubRoute(clubId) {
+  $('#main').html(ClubsFormPage(clubId));
 }
 
-function viewClientsRoute(id) {
-  $('#main').html(ClientsPage(id));
+function viewClientsRoute(clubId) {
+  $('#main').html(ClientsPage(clubId));
 }
 
-function createClientRoute() {}
+function createClientRoute(clubId) {
+  $('#main').html(ClientFormPage(clubId));
+}
 
-function updateClientRoute() {}
+function updateClientRoute(clubId, clientId) {
+  $('#main').html(ClientFormPage(clubId, clientId));
+}
 
 Router.register('', homeRoute);
 Router.register('clubs', catalogueRoute);

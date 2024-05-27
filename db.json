@@ -3,7 +3,7 @@
     {
       "id": "0706",
       "name": "Golden Night",
-      "location": "New YorK123"
+      "location": "New York"
     },
     {
       "id": "e53d",
@@ -44,11 +44,6 @@
       "id": "a650",
       "name": "BYY",
       "location": "Las Vegas"
-    },
-    {
-      "id": "da9e",
-      "name": "23123",
-      "location": "23123123"
     }
   ],
   "clients": [
@@ -56,163 +51,190 @@
       "id": "A1B2C3D4E5",
       "firstName": "Alice",
       "lastName": "Johnson",
-      "club": "0706"
+      "age": "18",
+      "clubId": "0706"
     },
     {
       "id": "F6G7H8I9J0",
       "firstName": "Bob",
       "lastName": "Smith",
-      "club": "0706"
+      "age": "18",
+      "clubId": "0706"
     },
     {
       "id": "K1L2M3N4O5",
       "firstName": "Charlie",
       "lastName": "Brown",
-      "club": "0706"
+      "age": "18",
+      "clubId": "0706"
     },
     {
       "id": "P6Q7R8S9T0",
       "firstName": "David",
       "lastName": "Wilson",
-      "club": "e53d"
+      "age": "18",
+      "clubId": "e53d"
     },
     {
       "id": "U1V2W3X4Y5",
       "firstName": "Eva",
       "lastName": "Moore",
-      "club": "e53d"
+      "age": "18",
+      "clubId": "e53d"
     },
     {
       "id": "Z6A7B8C9D0",
       "firstName": "Frank",
       "lastName": "Taylor",
-      "club": "e53d"
+      "age": "18",
+      "clubId": "e53d"
     },
     {
       "id": "E1F2G3H4I5",
       "firstName": "Grace",
       "lastName": "Anderson",
-      "club": "a9cf"
+      "age": "18",
+      "clubId": "a9cf"
     },
     {
       "id": "J6K7L8M9N0",
       "firstName": "Helen",
       "lastName": "Thomas",
-      "club": "a9cf"
+      "age": "18",
+      "clubId": "a9cf"
     },
     {
       "id": "O1P2Q3R4S5",
       "firstName": "Ivan",
       "lastName": "Jackson",
-      "club": "a9cf"
+      "age": "18",
+      "clubId": "a9cf"
     },
     {
       "id": "T6U7V8W9X0",
       "firstName": "Jack",
       "lastName": "White",
-      "club": "1a47"
+      "age": "18",
+      "clubId": "1a47"
     },
     {
       "id": "Y1Z2A3B4C5",
       "firstName": "Kate",
       "lastName": "Harris",
-      "club": "1a47"
+      "age": "18",
+      "clubId": "1a47"
     },
     {
       "id": "D6E7F8G9H0",
       "firstName": "Liam",
       "lastName": "Martin",
-      "club": "1a47"
+      "age": "18",
+      "clubId": "1a47"
     },
     {
       "id": "I1J2K3L4M5",
       "firstName": "Mia",
       "lastName": "Thompson",
-      "club": "aaa2"
+      "age": "18",
+      "clubId": "aaa2"
     },
     {
       "id": "N6O7P8Q9R0",
       "firstName": "Noah",
       "lastName": "Garcia",
-      "club": "aaa2"
+      "age": "18",
+      "clubId": "aaa2"
     },
     {
       "id": "S1T2U3V4W5",
       "firstName": "Olivia",
       "lastName": "Martinez",
-      "club": "aaa2"
+      "age": "18",
+      "clubId": "aaa2"
     },
     {
       "id": "X6Y7Z8A9B0",
       "firstName": "Sophia",
       "lastName": "Robinson",
-      "club": "e632"
+      "age": "18",
+      "clubId": "e632"
     },
     {
       "id": "C1D2E3F4G5",
       "firstName": "William",
       "lastName": "Clark",
-      "club": "e632"
+      "age": "18",
+      "clubId": "e632"
     },
     {
       "id": "H6I7J8K9L0",
       "firstName": "Isabella",
       "lastName": "Rodriguez",
-      "club": "e632"
+      "age": "18",
+      "clubId": "e632"
     },
     {
       "id": "M1N2O3P4Q5",
       "firstName": "Liam",
       "lastName": "Lewis",
-      "club": "04af"
+      "age": "18",
+      "clubId": "04af"
     },
     {
       "id": "R6S7T8U9V0",
       "firstName": "Emma",
       "lastName": "Lee",
-      "club": "04af"
+      "age": "18",
+      "clubId": "04af"
     },
     {
       "id": "W1X2Y3Z4A5",
       "firstName": "Alexander",
       "lastName": "Walker",
-      "club": "04af"
+      "age": "18",
+      "clubId": "04af"
     },
     {
       "id": "B6C7D8E9F0",
       "firstName": "Ava",
       "lastName": "Hall",
-      "club": "4412"
+      "age": "18",
+      "clubId": "4412"
     },
     {
       "id": "G1H2I3J4K5",
       "firstName": "James",
       "lastName": "Allen",
-      "club": "4412"
+      "age": "18",
+      "clubId": "4412"
     },
     {
       "id": "L6M7N8O9P0",
       "firstName": "Sophia",
       "lastName": "Young",
-      "club": "4412"
+      "age": "18",
+      "clubId": "4412"
     },
     {
       "id": "Q1R2S3T4U5",
       "firstName": "Logan",
       "lastName": "King",
-      "club": "a650"
+      "age": "18",
+      "clubId": "a650"
     },
     {
       "id": "V6W7X8Y9Z0",
       "firstName": "Avery",
       "lastName": "Wright",
-      "club": "a650"
+      "age": "18",
+      "clubId": "a650"
     },
     {
       "id": "A1B2C3D4E6",
       "firstName": "Elijah",
       "lastName": "Lopez",
-      "club": "a650"
+      "age": "18",
+      "clubId": "a650"
     }
   ]
 }

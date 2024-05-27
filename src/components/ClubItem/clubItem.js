@@ -1,9 +1,8 @@
 import { fetchClub } from '../../api/index.js';
 
-function ClubItem(id) {
-  fetchClub(id, function (data) {
+function ClubItem(clubId) {
+  fetchClub(clubId, function (data) {
     if (data) {
-      console.log(data);
       renderClub(data);
     } else {
       return;

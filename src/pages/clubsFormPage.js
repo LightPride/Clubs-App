@@ -1,7 +1,7 @@
 import ClubsForm from '../components/СlubsForm/clubsForm.js';
 
-function ClubsFormPage(id) {
-  return ClubsForm(id);
+function ClubsFormPage(clubId) {
+  return ClubsForm(clubId);
 }
 
 export default ClubsFormPage;
