@@ -1,4 +1,4 @@
-import ClubsForm from '../components/СlubsForm/clubsForm.js';
+import ClubsForm from '../components/СlubsForm/index.js';
 
 function ClubsFormPage(clubId) {
   return ClubsForm(clubId);

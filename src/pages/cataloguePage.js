@@ -1,4 +1,4 @@
-import ClubsCatalogue from '../components/ClubsCatalogue/clubsCatalogue.js';
+import ClubsCatalogue from '../components/ClubsCatalogue/index.js';
 
 function CataloguePage() {
   return $('<div></div>')

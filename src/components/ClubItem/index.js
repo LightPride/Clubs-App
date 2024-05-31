@@ -1,17 +1,20 @@
-import { fetchClub } from '../../api/index.js';
+import { fetchClub } from '../../api/clubs.js';
 
 function ClubItem(clubId) {
+  var parentNode = $(
+    '<div id="clubcard" class="card" style="width: 18rem;"></div>'
+  );
   fetchClub(clubId, function (data) {
     if (data) {
-      renderClub(data);
+      renderClub(data, parentNode);
     } else {
       return;
     }
   });
-  return $('<div id="clubcard" class="card" style="width: 18rem;"></div>');
+  return parentNode;
 }
 
-function renderClub(club) {
+function renderClub(club, parentNode) {
   var clubInfo =
     '<div class="card-body" id="' +
     club.id +
@@ -24,7 +27,7 @@ function renderClub(club) {
     '</p >' +
     '<p class="card-text">Im a teapot</p >' +
     '</div >';
-  $('#clubcard').append($(clubInfo));
+  parentNode.append($(clubInfo));
 }
 
 export default ClubItem;

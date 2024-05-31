@@ -17,9 +17,8 @@
   },
   "homepage": "https://github.com/LightPride/Clubs-App#readme",
   "devDependencies": {
-    "@eslint/js": "^9.2.0",
-    "eslint": "^9.2.0",
-    "globals": "^15.2.0",
+    "eslint": "^8.57.0",
+    "eslint-plugin-jquery": "^1.5.1",
     "prettier": "3.2.5"
   },
   "dependencies": {

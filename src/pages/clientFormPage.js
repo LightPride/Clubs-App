@@ -1,4 +1,4 @@
-import ClientForm from '../components/ClientForm/clientForm.js';
+import ClientForm from '../components/ClientForm/index.js';
 
 function ClientFormPage(clubId, clientId) {
   return ClientForm(clubId, clientId);

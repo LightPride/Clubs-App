@@ -1,4 +1,4 @@
-import ClientsList from '../components/ClientsList/clientsList.js';
+import ClientsList from '../components/ClientsList/index.js';
 
 function ClientsPage(clubId) {
   return $('<div></div>')

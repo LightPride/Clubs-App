@@ -1,15 +1,19 @@
-import { deleteClient, fetchClients } from '../../api/index.js';
+import { deleteClient, fetchClients } from '../../api/clients.js';
+import Store from '../../shared/libs/store/index.js';
 
 function ClientsList(clubId) {
+  var parentNode = $('<div id="clientsList" class="list-group"></div>');
   fetchClients(function (data) {
     if (data) {
-      renderClients(data, clubId);
+      Store.setItems('clients', data);
+      console.log(Store.getItems('clients'));
+      renderClients(Store.getItems('clients'), clubId, parentNode);
     } else {
       return;
     }
   });
 
-  return $('<div id="clientsList" class="list-group"></div>');
+  return parentNode;
 }
 
 function filterClients(clients, clubId) {
@@ -19,13 +23,11 @@ function filterClients(clients, clubId) {
   return filteredClients;
 }
 
-function renderClients(clients, clubId) {
+function renderClients(clients, clubId, parentNode) {
   var filteredClients = filterClients(clients, clubId);
 
-  for (var i = 0; i < filteredClients.length; i += 1) {
-    var client = filteredClients[i];
-
-    $('#clientsList').append(
+  filteredClients.map(function (client) {
+    parentNode.append(
       $('<div class="list-group-item list-group-item-action"></div>')
         .append(
           $(
@@ -52,11 +54,12 @@ function renderClients(clients, clubId) {
             'click',
             function () {
               deleteClient(client.id);
+              Store.deleteItem('clients', client.id);
             }
           )
         )
     );
-  }
+  });
 }
 
 export default ClientsList;

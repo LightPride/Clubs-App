@@ -1,4 +1,4 @@
-import ClubItem from '../components/ClubItem/clubItem.js';
+import ClubItem from '../components/ClubItem/index.js';
 
 function ClubItemPage(clubId) {
   return ClubItem(clubId);

@@ -7,10 +7,10 @@ function Header() {
     )
       .append(
         $(
-          '<a class="navbar-brand" href="/"><span class="logo">ClubsApp</span></a>'
+          '<a class="navbar-brand" href="#"><span class="logo">ClubsApp</span></a>'
         )
       )
-      .append($('<a class="navigation__link" href="/">Home</a>'))
+      .append($('<a class="navigation__link" href="#">Home</a>'))
       .append(
         $('<a class="navigation__link" href="#clubs" data-nav>Catalogue</a>')
       )
