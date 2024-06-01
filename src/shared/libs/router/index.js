@@ -1,11 +1,3 @@
-import CataloguePage from '../../../pages/cataloguePage.js';
-import ClientFormPage from '../../../pages/clientFormPage.js';
-import ClientsPage from '../../../pages/clientsPage.js';
-import ClubItemPage from '../../../pages/clubItemPage.js';
-import ClubsFormPage from '../../../pages/clubsFormPage.js';
-import HomePage from '../../../pages/homePage.js';
-import NotFoundPage from '../../../pages/notFoundPage.js';
-
 var Router = {
   routes: [],
   notFoundRoute: null,
@@ -57,15 +49,5 @@ var Router = {
     }
   },
 };
-
-Router.register('', HomePage);
-Router.register('clubs', CataloguePage);
-Router.register('clubs/create', ClubsFormPage);
-Router.register('clubs/:id', ClubItemPage);
-Router.register('clubs/:id/update', ClubsFormPage);
-Router.register('clubs/:id/clients', ClientsPage);
-Router.register('clubs/:id/clients/create', ClientFormPage);
-Router.register('clubs/:id/clients/:clientId/update', ClientFormPage);
-Router.register('not-found', NotFoundPage);
 
 export default Router;

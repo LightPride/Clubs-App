@@ -1,5 +1,5 @@
 import { createClient, fetchClient, updateClient } from '../../api/clients.js';
-import validateClientForm from '../../utils/clientFormValidation.js';
+import validateClientForm from '../../shared/utils/clientFormValidation.js';
 
 function ClientForm(clubId, clientId) {
   var form = $('<form id="clubForm"></form>');
@@ -9,8 +9,8 @@ function ClientForm(clubId, clientId) {
   var lastNameInput = $(
     '<div class="mb-3"><label for="lastName" class="form-label">Last Name<input type="text" name="lastName" id="lastName" class="form-control"></label><div id="lastNameCheck" class="form-text"></div></div>'
   );
-  var ageInput = $(
-    '<div class="mb-3"><label for="age" class="form-label">Age<input type="text" name="age" id="age" class="form-control"></label><div id="ageCheck" class="form-text"></div></div>'
+  var birthDateInput = $(
+    '<div class="mb-3"><label for="birthDate" class="form-label">Date of birth<input type="date" name="birthDate" id="birthDate" class="form-control"></label><div id="birthDateCheck" class="form-text"></div></div>'
   );
   var button = $(
     '<button "type="submit" class="btn btn-primary">Submit</button>'
@@ -20,7 +20,7 @@ function ClientForm(clubId, clientId) {
     fetchClient(clientId, function (client) {
       firstNameInput[0].children[0].children[0].value = client.firstName;
       lastNameInput[0].children[0].children[0].value = client.lastName;
-      ageInput[0].children[0].children[0].value = client.age;
+      birthDateInput[0].children[0].children[0].value = client.birthDate;
     });
   }
 
@@ -28,31 +28,34 @@ function ClientForm(clubId, clientId) {
     event.preventDefault();
     var firstNameValue = event.currentTarget[0].value;
     var lastNameValue = event.currentTarget[1].value;
-    var ageValue = event.currentTarget[2].value;
+    var birthDateValue = event.currentTarget[2].value;
 
-    if (!validateClientForm(firstNameValue, lastNameValue, ageValue)) {
+    if (!validateClientForm(firstNameValue, lastNameValue, birthDateValue)) {
       return;
     }
     var data = {
       firstName: firstNameValue.trim(),
       lastName: lastNameValue.trim(),
-      age: ageValue.trim(),
+      birthDate: birthDateValue,
       clubId: clubId,
     };
     console.log(data);
     if (clientId) {
-      updateClient(clientId, data);
+      updateClient(clientId, data, function () {
+        window.location.hash = '#clubs/' + clubId + '/clients';
+      });
     } else {
-      createClient(data);
+      createClient(data, function () {
+        window.location.hash = '#clubs/' + clubId + '/clients';
+      });
     }
-    window.location.hash = '#clubs/' + clubId + '/clients';
   }
 
   return form
     .on('submit', onSubmit)
     .append(firstNameInput)
     .append($(lastNameInput))
-    .append($(ageInput))
+    .append($(birthDateInput))
     .append($(button));
 }
 

@@ -1,23 +1,23 @@
 import InstanceAPI from './instance.js';
 
-var PATH = 'clients';
+var CLIENTS_PATH = '/clients';
 
 export function fetchClients(callback) {
-  InstanceAPI.get(callback, PATH);
+  InstanceAPI.get(callback, CLIENTS_PATH);
 }
 
 export function fetchClient(id, callback) {
-  InstanceAPI.get(callback, PATH, id);
+  InstanceAPI.get(callback, CLIENTS_PATH + '/' + id);
 }
 
-export function createClient(data) {
-  InstanceAPI.post(data, PATH);
+export function createClient(data, callback) {
+  InstanceAPI.post(callback, data, CLIENTS_PATH);
 }
 
-export function updateClient(id, data) {
-  InstanceAPI.patch(data, PATH, id);
+export function updateClient(id, data, callback) {
+  InstanceAPI.patch(callback, data, CLIENTS_PATH + '/' + id);
 }
 
-export function deleteClient(id) {
-  InstanceAPI.delete(PATH, id);
+export function deleteClient(id, callback) {
+  InstanceAPI.delete(callback, CLIENTS_PATH + '/' + id);
 }

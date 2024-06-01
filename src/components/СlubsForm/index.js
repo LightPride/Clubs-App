@@ -1,5 +1,5 @@
 import { createClub, fetchClub, updateClub } from '../../api/clubs.js';
-import validateClubForm from '../../utils/clubFormValidation.js';
+import validateClubForm from '../../shared/utils/clubFormValidation.js';
 
 function ClubsForm(clubId) {
   var form = $('<form id="clubForm"></form>');
@@ -34,11 +34,14 @@ function ClubsForm(clubId) {
       location: clubLocationValue.trim(),
     };
     if (clubId) {
-      updateClub(clubId, data);
+      updateClub(clubId, data, function () {
+        window.location.hash = '#clubs';
+      });
     } else {
-      createClub(data);
+      createClub(data, function () {
+        window.location.hash = '#clubs';
+      });
     }
-    window.location.hash = '#clubs';
   }
 
   return form

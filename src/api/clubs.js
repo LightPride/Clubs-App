@@ -1,23 +1,23 @@
 import InstanceAPI from './instance.js';
 
-var PATH = 'clubs';
+var CLUBS_PATH = '/clubs';
 
 export function fetchClubs(callback) {
-  InstanceAPI.get(callback, PATH);
+  InstanceAPI.get(callback, CLUBS_PATH);
 }
 
 export function fetchClub(id, callback) {
-  InstanceAPI.get(callback, PATH, id);
+  InstanceAPI.get(callback, CLUBS_PATH + '/' + id);
 }
 
-export function createClub(data) {
-  InstanceAPI.post(data, PATH);
+export function createClub(data, callback) {
+  InstanceAPI.post(callback, data, CLUBS_PATH);
 }
 
-export function updateClub(id, data) {
-  InstanceAPI.patch(data, PATH, id);
+export function updateClub(id, data, callback) {
+  InstanceAPI.patch(callback, data, CLUBS_PATH + '/' + id);
 }
 
-export function deleteClub(id) {
-  InstanceAPI.delete(PATH, id);
+export function deleteClub(id, callback) {
+  InstanceAPI.delete(callback, CLUBS_PATH + '/' + id);
 }
