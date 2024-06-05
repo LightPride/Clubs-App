@@ -1,5 +1,6 @@
 :root {
   --background-color: #ffffff;
+  --text-white-color: #f1f1f1;
   --primary-color: #000000;
 }
 body {
@@ -29,11 +30,13 @@ img {
 }
 
 .logo {
-  color: #f5f5f5;
+  color: var(--background-color);
   font-weight: 500;
 }
 
 .navigation__link {
+  width: 85px;
+  text-align: center;
   color: #cecece;
   font-size: 16px;
   text-decoration: none;
@@ -49,6 +52,108 @@ img {
 }
 
 #main {
-  padding-left: 100px;
-  padding-right: 100px;
+  padding: 20px 20px 0 20px;
+  margin: 0 auto;
+  text-align: center;
+
+  @media (min-width: 768px) {
+    padding: 20px 32px 0 32px;
+  }
+
+  @media (min-width: 1440px) {
+    padding: 20px 100px 0 100px;
+  }
+}
+
+.home__wrapper {
+  display: flex;
+  flex-direction: column;
+  padding: 200px 0 0 0;
+}
+
+.home__background {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+
+  background-image: url('./images/home-background.jpg');
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+
+  z-index: -1;
+}
+
+.home__title {
+  color: var(--text-white-color);
+  font-family: Manrope, sans-serif;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 24px;
+  font-size: 42px;
+  margin: 0 auto;
+}
+
+.home__list {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 80px;
+
+  margin-top: 94px;
+}
+
+.home__item {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+
+  background-image: linear-gradient(#000000dd, #000000dd);
+  border-radius: 20px;
+  padding: 20px;
+  width: 1200px;
+
+  transition: 300ms;
+
+  &:hover {
+    background-color: #000000;
+  }
+  &:hover p {
+    text-shadow: 0 0 10px #ffffffbb;
+  }
+}
+
+.home__text {
+  color: var(--text-white-color);
+  font-family: Manrope, sans-serif;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 24px;
+  margin: 0 auto;
+  text-align: center;
+  transition: 300ms;
+}
+
+.not-found-background {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+
+  background-image: url('./images/not-found-background.jpg');
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+
+  z-index: -1;
+}
+
+.not-found-container {
+  margin-top: 400px;
 }

@@ -2,7 +2,7 @@ import { fetchClub } from '../../api/clubs.js';
 
 function ClubItem(clubId) {
   var parentNode = $(
-    '<div id="clubcard" class="card" style="width: 18rem;"></div>'
+    '<div id="clubcard" class="card ms-auto me-auto" style="width: 18rem;"></div>'
   );
   fetchClub(clubId, function (data) {
     if (data) {
@@ -27,7 +27,7 @@ function renderClub(club, parentNode) {
     '</p >' +
     '<p class="card-text">Im a teapot</p >' +
     '</div >';
-  parentNode.append($(clubInfo));
+  parentNode.append(clubInfo);
 }
 
 export default ClubItem;

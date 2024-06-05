@@ -10,12 +10,12 @@ export function fetchClient(id, callback) {
   InstanceAPI.get(callback, CLIENTS_PATH + '/' + id);
 }
 
-export function createClient(data, callback) {
-  InstanceAPI.post(callback, data, CLIENTS_PATH);
-}
-
-export function updateClient(id, data, callback) {
-  InstanceAPI.patch(callback, data, CLIENTS_PATH + '/' + id);
+export function createOrUpdateClient(id, data, callback) {
+  if (!id) {
+    InstanceAPI.post(callback, data, CLIENTS_PATH);
+  } else {
+    InstanceAPI.patch(callback, data, CLIENTS_PATH + '/' + id);
+  }
 }
 
 export function deleteClient(id, callback) {

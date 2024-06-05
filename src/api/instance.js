@@ -2,42 +2,36 @@ var InstanceAPI = {
   BASE_URL: 'http://localhost:3000',
 
   get: function (callback, path) {
-    this.request({
-      url: this.BASE_URL + path,
+    this.request(path, callback, {
       method: 'GET',
-      success: callback,
     });
   },
 
   post: function (callback, data, path) {
-    this.request({
-      url: this.BASE_URL + path,
+    this.request(path, callback, {
       method: 'POST',
       data: JSON.stringify(data),
-      success: callback,
     });
   },
 
   patch: function (callback, data, path) {
-    this.request({
-      url: this.BASE_URL + path,
+    this.request(path, callback, {
       method: 'PATCH',
       data: JSON.stringify(data),
-      success: callback,
     });
   },
 
   delete: function (callback, path) {
-    this.request({
-      url: this.BASE_URL + path,
+    this.request(path, callback, {
       method: 'DELETE',
-      success: callback,
     });
   },
 
-  request: function (params) {
+  request: function (path, callback, params) {
     $.ajax(
       Object.assign(params, {
+        url: this.BASE_URL + path,
+        success: callback,
         dataType: 'json',
         error: function (error) {
           console.error('Error fetching data:', error);

@@ -1,23 +1,20 @@
+import isEmpty from './isEmpty.js';
+
 function validateClubForm(clubNameValue, clubLocationValue) {
-  var clubNameCheck = $('#clubNameCheck');
-  var clubLocationCheck = $('#clubLocationCheck');
-  if (clubNameValue.trim().length === 0) {
-    clubNameCheck.show();
-    clubNameCheck.html('This field should not be empty');
+  var errors = {
+    clubNameError: '',
+    clubLocationError: '',
+  };
 
-    return false;
+  if (isEmpty(clubNameValue)) {
+    errors.clubNameError = 'This field should not be empty';
   }
-  clubNameCheck.hide();
 
-  if (clubLocationValue.trim().length === 0) {
-    clubLocationCheck.show();
-    clubLocationCheck.html('This field should not be empty');
-
-    return false;
+  if (isEmpty(clubLocationValue)) {
+    errors.clubLocationError = 'This field should not be empty';
   }
-  clubLocationCheck.hide();
 
-  return true;
+  return errors;
 }
 
 export default validateClubForm;

@@ -1,6 +1,6 @@
 function Header() {
   return $(
-    '<header id="header" class="navbar navbar-expand-lg bg-dark sticky-top mb-5"></header>'
+    '<header id="header" class="navbar navbar-expand-lg bg-dark sticky-top"></header>'
   ).append(
     $(
       '<nav id="navigation" class="container-xxl bd-gutter flex-wrap flex-lg-nowrap"></nav>'

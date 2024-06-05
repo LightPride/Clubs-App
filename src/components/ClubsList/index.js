@@ -4,20 +4,25 @@ function ClubsCatalogue() {
   var parentNode = $(
     '<div id="catalogue" class="row row-cols-1 row-cols-md-3 g-4"></div>'
   );
+
   fetchClubs(function (data) {
-    if (data) {
-      renderCatalogue(data, parentNode);
-    } else {
-      return;
-    }
+    handleFetchClubs(data, parentNode);
   });
 
   return parentNode;
 }
 
+function handleFetchClubs(data, parentNode) {
+  if (data) {
+    renderCatalogue(data, parentNode);
+  } else {
+    return;
+  }
+}
+
 function renderCatalogue(clubs, parentNode) {
   parentNode.html('');
-  clubs.map(function (club) {
+  clubs.forEach(function (club) {
     var clubCard = $('<div id="' + club.id + '"></div>').append(
       $('<div class="card"></div>').append(
         $('<div class="card-body"></div>')
@@ -50,11 +55,7 @@ function renderCatalogue(clubs, parentNode) {
             ).on('click', function () {
               deleteClub(club.id, function () {
                 fetchClubs(function (data) {
-                  if (data) {
-                    renderCatalogue(data, parentNode);
-                  } else {
-                    return;
-                  }
+                  handleFetchClubs(data, parentNode);
                 });
               });
             })

@@ -1,4 +1,4 @@
-import ClubsCatalogue from '../components/ClubsCatalogue/index.js';
+import ClubsCatalogue from '../components/ClubsList/index.js';
 
 function CataloguePage() {
   return $('<div></div>')
@@ -7,7 +7,7 @@ function CataloguePage() {
         '<a href="#clubs/create" class="btn btn-primary ms-auto me-auto mb-5">Create Club</a>'
       )
     )
-    .append($(ClubsCatalogue()));
+    .append(ClubsCatalogue);
 }
 
 export default CataloguePage;

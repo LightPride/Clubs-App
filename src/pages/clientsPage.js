@@ -9,7 +9,7 @@ function ClientsPage(clubId) {
           '/clients/create" class="btn btn-primary ms-auto me-auto mb-5">Create Client</a>'
       )
     )
-    .append($(ClientsList(clubId)));
+    .append(ClientsList(clubId));
 }
 
 export default ClientsPage;

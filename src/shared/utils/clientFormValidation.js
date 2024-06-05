@@ -1,37 +1,31 @@
-function validateClientForm(firstNameValue, lastNameValue, ageValue) {
-  var firstNameCheck = $('#firstNameCheck');
-  var lastNameCheck = $('#lastNameCheck');
-  var ageCheck = $('#birthDateCheck');
-  if (firstNameValue.trim().length === 0) {
-    firstNameCheck.show();
-    firstNameCheck.html('This field should not be empty');
+import countAge from './countAge.js';
+import isEmpty from './isEmpty.js';
 
-    return false;
+function validateClientForm(firstNameValue, lastNameValue, birthDateValue) {
+  var legalAge = 18;
+  var age = countAge(birthDateValue);
+
+  var errors = {
+    firstNameError: '',
+    lastNameError: '',
+    birthDateError: '',
+  };
+
+  if (isEmpty(firstNameValue)) {
+    errors.firstNameError = 'This field should not be empty';
   }
-  firstNameCheck.hide();
 
-  if (lastNameValue.trim().length === 0) {
-    lastNameCheck.show();
-    lastNameCheck.html('This field should not be empty');
-
-    return false;
+  if (isEmpty(lastNameValue)) {
+    errors.lastNameError = 'This field should not be empty';
   }
-  lastNameCheck.hide();
-  console.log(ageValue);
-  var diff = Date.now() - new Date(ageValue).getTime();
-  var age = new Date(diff).getUTCFullYear() - 1970;
 
-  if (ageValue.length === 0) {
-    ageCheck.show();
-    ageCheck.html('This field should not be empty');
-    return false;
-  } else if (age < 18) {
-    ageCheck.html('Club member must be 18 years old');
-    return false;
+  if (isEmpty(birthDateValue)) {
+    errors.birthDateError = 'This field should not be empty';
+  } else if (age < legalAge) {
+    errors.birthDateError = 'Club member must be 18 years old';
   }
-  ageCheck.hide();
 
-  return true;
+  return errors;
 }
 
 export default validateClientForm;
