@@ -2,19 +2,17 @@ import { deleteClient, fetchClients } from '../../api/clients.js';
 
 function ClientsList(clubId) {
   var parentNode = $('<div id="clientsList" class="list-group"></div>');
-  fetchClients(function (data) {
-    handleFetchClients(data, clubId, parentNode);
-  });
+  fetchClients(handleFetchClients(clubId, parentNode));
 
   return parentNode;
 }
 
-function handleFetchClients(data, clubId, parentNode) {
-  if (data) {
-    renderClients(data, clubId, parentNode);
-  } else {
-    return;
-  }
+function handleFetchClients(clubId, parentNode) {
+  return function (data) {
+    if (data) {
+      renderClients(data, clubId, parentNode);
+    }
+  };
 }
 
 function renderClients(clients, clubId, parentNode) {
@@ -50,9 +48,7 @@ function renderClients(clients, clubId, parentNode) {
             'click',
             function () {
               deleteClient(client.id, function () {
-                fetchClients(function (data) {
-                  handleFetchClients(data, clubId, parentNode);
-                });
+                fetchClients(handleFetchClients(clubId, parentNode));
               });
             }
           )

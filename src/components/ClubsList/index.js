@@ -5,19 +5,17 @@ function ClubsCatalogue() {
     '<div id="catalogue" class="row row-cols-1 row-cols-md-3 g-4"></div>'
   );
 
-  fetchClubs(function (data) {
-    handleFetchClubs(data, parentNode);
-  });
+  fetchClubs(handleFetchClubs(parentNode));
 
   return parentNode;
 }
 
-function handleFetchClubs(data, parentNode) {
-  if (data) {
-    renderCatalogue(data, parentNode);
-  } else {
-    return;
-  }
+function handleFetchClubs(parentNode) {
+  return function (data) {
+    if (data) {
+      renderCatalogue(data, parentNode);
+    }
+  };
 }
 
 function renderCatalogue(clubs, parentNode) {
@@ -54,9 +52,7 @@ function renderCatalogue(clubs, parentNode) {
               '<button type="button" class="btn btn-primary">Delete</button>'
             ).on('click', function () {
               deleteClub(club.id, function () {
-                fetchClubs(function (data) {
-                  handleFetchClubs(data, parentNode);
-                });
+                fetchClubs(handleFetchClubs(parentNode));
               });
             })
           )
