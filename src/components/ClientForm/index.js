@@ -1,92 +1,101 @@
-import { createOrUpdateClient, fetchClient } from '../../api/clients.js';
-import validateClientForm from '../../shared/utils/clientFormValidation.js';
-import getCurrentDate from '../../shared/utils/getCurrentDate.js';
+import { clientService } from '../../api/clients';
+import { AlertToast } from '../../shared/utils/alertToast';
+import { validateClientForm } from '../../shared/utils/clientFormValidation';
+import { getCurrentDate } from '../../shared/utils/getCurrentDate';
 
-function ClientForm(clubId, clientId) {
-  var form = $('<form id="clubForm"></form>');
-  var firstNameInput = $(
-    '<div class="mb-3"><label for="firstName" class="form-label">First Name<input type="text" name="firstName" id="firstName" class="form-control"></label></div>'
-  );
-
-  var lastNameInput = $(
-    '<div class="mb-3"><label for="lastName" class="form-label">Last Name<input type="text" name="lastName" id="lastName" class="form-control"></label></div>'
-  );
-
-  var birthDateInput = $(
-    '<div class="mb-3"><label for="birthDate" class="form-label">Date of birth<input type="date" min="1900-01-01" max="' +
-      getCurrentDate() +
-      '" name="birthDate" id="birthDate" class="form-control"></label></div>'
-  );
-
-  var firstNameCheck = $('<div id="firstNameCheck" class="form-text"></div>');
-
-  var lastNameCheck = $('<div id="lastNameCheck" class="form-text"></div>');
-
-  var birthDateCheck = $('<div id="birthDateCheck" class="form-text"></div>');
-
-  var button = $(
-    '<button "type="submit" class="btn btn-primary">Submit</button>'
-  );
-
-  if (clientId) {
-    fetchClient(clientId, function (client) {
-      firstNameInput[0].children[0].children[0].value = client.firstName;
-      lastNameInput[0].children[0].children[0].value = client.lastName;
-      birthDateInput[0].children[0].children[0].value = client.birthDate;
-    });
+export class ClientForm {
+  constructor(clubId, clientId) {
+    this.clubId = clubId;
+    this.clientId = clientId;
+    this.form = $(`<form id="clubForm"></form>`);
+    this.firstNameInput = $(
+      `<div class="mb-3"><label for="firstName" class="form-label">First Name<input type="text" name="firstName" id="firstName" class="form-control"></label></div>`
+    );
+    this.lastNameInput = $(
+      `<div class="mb-3"><label for="lastName" class="form-label">Last Name<input type="text" name="lastName" id="lastName" class="form-control"></label></div>`
+    );
+    this.birthDateInput = $(
+      `<div class="mb-3"><label for="birthDate" class="form-label">Date of birth<input type="date" min="1900-01-01" max="${getCurrentDate()}" name="birthDate" id="birthDate" class="form-control"></label></div>`
+    );
+    this.firstNameCheck = $(
+      `<div id="firstNameCheck" class="form-text"></div>`
+    );
+    this.lastNameCheck = $(`<div id="lastNameCheck" class="form-text"></div>`);
+    this.birthDateCheck = $(
+      `<div id="birthDateCheck" class="form-text"></div>`
+    );
+    this.button = $(
+      `<button "type="submit" class="btn btn-primary">Submit</button>`
+    );
+    if (this.clientId) {
+      this.handleFetchClient();
+    }
   }
+  handleFetchClient = async () => {
+    const client = await clientService.fetchClient(this.clientId);
+    this.firstNameInput[0].children[0].children[0].value = client.firstName;
+    this.lastNameInput[0].children[0].children[0].value = client.lastName;
+    this.birthDateInput[0].children[0].children[0].value = client.birthDate;
+  };
 
-  function handleErrors(firstNameValue, lastNameValue, birthDateValue) {
-    var validationErrors = validateClientForm(
+  handleErrors = (firstNameValue, lastNameValue, birthDateValue) => {
+    const validationErrors = validateClientForm(
       firstNameValue,
       lastNameValue,
       birthDateValue
     );
 
-    firstNameCheck
+    this.firstNameCheck
       .html(validationErrors.firstNameError)
-      .toggle(!!validationErrors.firstNameError);
-    lastNameCheck
+      .toggle(Boolean(validationErrors.firstNameError));
+    this.lastNameCheck
       .html(validationErrors.lastNameError)
-      .toggle(!!validationErrors.lastNameError);
-    birthDateCheck
+      .toggle(Boolean(validationErrors.lastNameError));
+    this.birthDateCheck
       .html(validationErrors.birthDateError)
-      .toggle(!!validationErrors.birthDateError);
+      .toggle(Boolean(validationErrors.birthDateError));
 
     return (
       validationErrors.firstNameError ||
       validationErrors.lastNameError ||
       validationErrors.birthDateError
     );
-  }
+  };
 
-  function onSubmit(event) {
+  onSubmit = async event => {
     event.preventDefault();
-    var firstNameValue = event.currentTarget[0].value;
-    var lastNameValue = event.currentTarget[1].value;
-    var birthDateValue = event.currentTarget[2].value;
+    const firstNameValue = event.currentTarget[0].value;
+    const lastNameValue = event.currentTarget[1].value;
+    const birthDateValue = event.currentTarget[2].value;
 
-    if (handleErrors(firstNameValue, lastNameValue, birthDateValue)) {
+    if (this.handleErrors(firstNameValue, lastNameValue, birthDateValue)) {
       return;
     }
-    var data = {
+
+    const data = {
       firstName: firstNameValue.trim(),
       lastName: lastNameValue.trim(),
       birthDate: birthDateValue,
-      clubId: clubId,
+      clubId: this.clubId,
     };
 
-    createOrUpdateClient(clientId, data, function () {
-      window.location.hash = '#clubs/' + clubId + '/clients';
-    });
-  }
+    await clientService
+      .createOrUpdateClient(this.clientId, data)
+      .then(response => {
+        new AlertToast(
+          `Client: ${response.data.firstName} ${response.data.lastName}, successfully ${this.clientId ? 'updated' : 'added'}!`
+        ).show();
+      });
 
-  return form
-    .on('submit', onSubmit)
-    .append(firstNameInput.append(firstNameCheck))
-    .append(lastNameInput.append(lastNameCheck))
-    .append(birthDateInput.append(birthDateCheck))
-    .append(button);
+    window.location.hash = `#clubs/${this.clubId}/clients`;
+  };
+
+  render = () => {
+    return this.form
+      .on('submit', this.onSubmit)
+      .append(this.firstNameInput.append(this.firstNameCheck))
+      .append(this.lastNameInput.append(this.lastNameCheck))
+      .append(this.birthDateInput.append(this.birthDateCheck))
+      .append(this.button);
+  };
 }
-
-export default ClientForm;

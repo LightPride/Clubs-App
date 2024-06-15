@@ -1,5 +1,5 @@
-function HomePage() {
-  return $('<div class="home__wrapper"><div class="home__background"/></div>')
+export const HomePage = () =>
+  $('<div class="home__wrapper"><div class="home__background"/></div>')
     .append($('<h1 class="home__title">Welcome to <b>Clubs App</b></h1>'))
     .append(
       $('<ul class="home__list"></ul>')
@@ -12,10 +12,7 @@ function HomePage() {
         )
         .append(
           $('<li class="home__item"></li>').append(
-            '<p class="home__text">I created this app to practice my EcmaScript5 skills with the help of JQuery. I also used Bootstrap for quick styling and Json-WebServer to quickly make my own database. Configured EsLint and Prettier.</p>'
+            '<p class="home__text">This is the second version of ClubsApp. This time i rewrote the app using EcmaScript6 syntax and Webpack with Js, Css and Html minimisers. Jquery and Bootstrap are included as npm packages and configured through webpack. Eslint now configured with vercel-style guide. I also used Axios for HTTP requests.</p>'
           )
         )
     );
-}
-
-export default HomePage;

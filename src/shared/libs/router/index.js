@@ -1,53 +1,59 @@
-var Router = {
-  routes: [],
-  notFoundRoute: null,
-  init: function (parentNode) {
-    window.addEventListener('hashchange', this.route.bind(this, parentNode));
+class Router {
+  constructor() {
+    this.routes = [];
+    this.notFoundRoute = null;
+  }
+
+  init(parentNode) {
+    window.addEventListener('hashchange', () => this.route(parentNode));
     this.route(parentNode);
     return parentNode;
-  },
-  route: function (parentNode) {
-    var hash = window.location.hash.slice(1);
-    var parts = hash.split('/');
+  }
 
-    for (var i = 0; i < this.routes.length; i++) {
-      var match = this.matchRoute(parts, this.routes[i]);
+  async route(parentNode) {
+    const hash = window.location.hash.slice(1);
+    const parts = hash.split('/');
+
+    for (const route of this.routes) {
+      const match = this.matchRoute(parts, route);
       if (match) {
-        parentNode.html(this.routes[i].callback.apply(null, match.params));
-
+        const content = await route.callback(...match.params);
+        parentNode.html(content);
         return;
       }
     }
-    if (this.notFoundRoute) {
-      parentNode.html(this.notFoundRoute.callback());
-    }
-  },
 
-  matchRoute: function (parts, route) {
-    var routeParts = route.path.split('/');
+    if (this.notFoundRoute) {
+      const content = await this.notFoundRoute.callback();
+      parentNode.html(content);
+    }
+  }
+
+  matchRoute(parts, route) {
+    const routeParts = route.path.split('/');
 
     if (routeParts.length !== parts.length) {
       return null;
     }
 
-    var params = [];
-    for (var i = 0; i < routeParts.length; i++) {
-      if (routeParts[i].charAt(0) === ':') {
+    const params = [];
+    for (let i = 0; i < routeParts.length; i++) {
+      if (routeParts[i].startsWith(':')) {
         params.push(parts[i]);
       } else if (routeParts[i] !== parts[i]) {
         return null;
       }
     }
-    return { params: params };
-  },
+    return { params };
+  }
 
-  register: function (path, callback) {
+  register(path, callback) {
     if (path === 'not-found') {
-      this.notFoundRoute = { path: path, callback: callback };
+      this.notFoundRoute = { path, callback };
     } else {
-      this.routes.push({ path: path, callback: callback });
+      this.routes.push({ path, callback });
     }
-  },
-};
+  }
+}
 
-export default Router;
+export const router = new Router();

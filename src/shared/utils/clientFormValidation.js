@@ -1,11 +1,15 @@
-import countAge from './countAge.js';
-import isEmpty from './isEmpty.js';
+import { countAge } from './countAge';
+import { isEmpty } from './isEmpty';
 
-function validateClientForm(firstNameValue, lastNameValue, birthDateValue) {
-  var legalAge = 18;
-  var age = countAge(birthDateValue);
+export const validateClientForm = (
+  firstNameValue,
+  lastNameValue,
+  birthDateValue
+) => {
+  const legalAge = 18;
+  const age = countAge(birthDateValue);
 
-  var errors = {
+  const errors = {
     firstNameError: '',
     lastNameError: '',
     birthDateError: '',
@@ -26,6 +30,4 @@ function validateClientForm(firstNameValue, lastNameValue, birthDateValue) {
   }
 
   return errors;
-}
-
-export default validateClientForm;
+};

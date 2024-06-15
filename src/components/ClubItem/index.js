@@ -1,33 +1,21 @@
-import { fetchClub } from '../../api/clubs.js';
+import { clubService } from '../../api/clubs';
 
-function ClubItem(clubId) {
-  var parentNode = $(
-    '<div id="clubcard" class="card ms-auto me-auto" style="width: 18rem;"></div>'
-  );
-  fetchClub(clubId, function (data) {
-    if (data) {
-      renderClub(data, parentNode);
-    } else {
-      return;
+export class ClubItem {
+  constructor(clubId) {
+    this.clubId = clubId;
+    this.parentNode = $(
+      `<div id="clubcard" class="card ms-auto me-auto" style="width: 18rem;"></div>`
+    );
+  }
+  makeClubMarkup = async () => {
+    const club = await clubService.fetchClub(this.clubId);
+    if (club) {
+      const clubInfo = `<div class="card-body" id="${club.id}"><h5 class="card-title">${club.name}</h5><p class="card-text">${club.location}</p><p class="card-text">Im a teapot</p></div>`;
+      this.parentNode.append(clubInfo);
     }
-  });
-  return parentNode;
+  };
+  render = () => {
+    this.makeClubMarkup();
+    return this.parentNode;
+  };
 }
-
-function renderClub(club, parentNode) {
-  var clubInfo =
-    '<div class="card-body" id="' +
-    club.id +
-    '">' +
-    '<h5 class="card-title">' +
-    club.name +
-    '</h5>' +
-    '<p class="card-text">' +
-    club.location +
-    '</p >' +
-    '<p class="card-text">Im a teapot</p >' +
-    '</div >';
-  parentNode.append(clubInfo);
-}
-
-export default ClubItem;

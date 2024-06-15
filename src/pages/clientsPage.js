@@ -1,15 +1,3 @@
-import ClientsList from '../components/ClientsList/index.js';
+import { ClientsList } from '../components/ClientsList';
 
-function ClientsPage(clubId) {
-  return $('<div></div>')
-    .append(
-      $(
-        '<a href="#clubs/' +
-          clubId +
-          '/clients/create" class="btn btn-primary ms-auto me-auto mb-5">Create Client</a>'
-      )
-    )
-    .append(ClientsList(clubId));
-}
-
-export default ClientsPage;
+export const ClientsPage = clubId => new ClientsList(clubId).render();

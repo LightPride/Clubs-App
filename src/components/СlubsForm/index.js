@@ -1,69 +1,76 @@
-import { createOrUpdateClub, fetchClub } from '../../api/clubs.js';
-import validateClubForm from '../../shared/utils/clubFormValidation.js';
+import { clubService } from '../../api/clubs';
+import { validateClubForm } from '../../shared/utils/clubFormValidation';
+import { AlertToast } from '../../shared/utils/alertToast';
 
-function ClubsForm(clubId) {
-  var form = $('<form id="clubForm"></form>');
-  var nameInput = $(
-    '<div class="mb-3"><label for="clubName" class="form-label">Club Name<input type="text" id="clubName" class="form-control"></label></div>'
-  );
-
-  var locationInput = $(
-    '<div class="mb-3"><label for="clubLocation" class="form-label">Club location<input type="text" id="clubLocation" class="form-control"></label></div>'
-  );
-
-  var nameCheck = $('<div id="clubNameCheck" class="form-text"></div>');
-
-  var locationCheck = $('<div id="clubLocationCheck" class="form-text"></div>');
-
-  var button = $(
-    '<button "type="submit" class="btn btn-primary">Submit</button>'
-  );
-
-  if (clubId) {
-    fetchClub(clubId, function (club) {
-      nameInput[0].children[0].children[0].value = club.name;
-      locationInput[0].children[0].children[0].value = club.location;
-    });
+export class ClubsForm {
+  constructor(clubId) {
+    this.clubId = clubId;
+    this.form = $(`<form id="clubForm"></form>`);
+    this.nameInput = $(
+      `<div class="mb-3"><label for="clubName" class="form-label">Club Name<input type="text" id="clubName" class="form-control"></label></div>`
+    );
+    this.locationInput = $(
+      `<div class="mb-3"><label for="clubLocation" class="form-label">Club location<input type="text" id="clubLocation" class="form-control"></label></div>`
+    );
+    this.nameCheck = $(`<div id="clubNameCheck" class="form-text"></div>`);
+    this.locationCheck = $(
+      `<div id="clubLocationCheck" class="form-text"></div>`
+    );
+    this.button = $(
+      `<button "type="submit" class="btn btn-primary">Submit</button>`
+    );
+    if (this.clubId) {
+      this.handleFetchClub();
+    }
   }
+  handleFetchClub = async () => {
+    const club = await clubService.fetchClub(this.clubId);
+    this.nameInput[0].children[0].children[0].value = club.name;
+    this.locationInput[0].children[0].children[0].value = club.location;
+  };
 
-  function handleErrors(clubNameValue, clubLocationValue) {
-    var validationErrors = validateClubForm(clubNameValue, clubLocationValue);
+  handleErrors = (clubNameValue, clubLocationValue) => {
+    const validationErrors = validateClubForm(clubNameValue, clubLocationValue);
 
-    nameCheck
+    this.nameCheck
       .html(validationErrors.clubNameError)
-      .toggle(!!validationErrors.clubNameError);
-    locationCheck
+      .toggle(Boolean(validationErrors.clubNameError));
+    this.locationCheck
       .html(validationErrors.clubLocationError)
-      .toggle(!!validationErrors.clubLocationError);
+      .toggle(Boolean(validationErrors.clubLocationError));
 
     return validationErrors.clubNameError || validationErrors.clubLocationError;
-  }
+  };
 
-  function onSubmit(event) {
+  onSubmit = async event => {
     event.preventDefault();
 
-    var clubNameValue = event.currentTarget[0].value;
-    var clubLocationValue = event.currentTarget[1].value;
+    const clubNameValue = event.currentTarget[0].value;
+    const clubLocationValue = event.currentTarget[1].value;
 
-    if (handleErrors(clubNameValue, clubLocationValue)) {
+    if (this.handleErrors(clubNameValue, clubLocationValue)) {
       return;
     }
 
-    var data = {
+    const data = {
       name: clubNameValue.trim(),
       location: clubLocationValue.trim(),
     };
 
-    createOrUpdateClub(clubId, data, function () {
-      window.location.hash = '#clubs';
+    await clubService.createOrUpdateClub(this.clubId, data).then(response => {
+      new AlertToast(
+        `Club: ${response.data.name}, successfully ${this.clubId ? `updated` : `created`}!`
+      ).show();
     });
-  }
 
-  return form
-    .on('submit', onSubmit)
-    .append(nameInput.append(nameCheck))
-    .append(locationInput.append(locationCheck))
-    .append(button);
+    window.location.hash = '#clubs';
+  };
+
+  render = () => {
+    return this.form
+      .on('submit', this.onSubmit)
+      .append(this.nameInput.append(this.nameCheck))
+      .append(this.locationInput.append(this.locationCheck))
+      .append(this.button);
+  };
 }
-
-export default ClubsForm;

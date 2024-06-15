@@ -1,7 +1,8 @@
-import './pages/index.js';
-import Router from './shared/libs/router/index.js';
-import Header from './components/Header/index.js';
+import './pages';
+import './scss/index.scss';
+import { router } from './shared/libs/router';
+import { Header } from './components/Header';
 
 $('#app')
-  .append(Header())
-  .append(Router.init($('<main id="main"></main>')));
+  .append(new Header().render())
+  .append(router.init($('<main id="main"></main>')));

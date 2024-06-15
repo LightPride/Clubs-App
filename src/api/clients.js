@@ -1,23 +1,29 @@
-import InstanceAPI from './instance.js';
+import { api } from './instance';
 
-var CLIENTS_PATH = '/clients';
-
-export function fetchClients(callback) {
-  InstanceAPI.get(callback, CLIENTS_PATH);
-}
-
-export function fetchClient(id, callback) {
-  InstanceAPI.get(callback, CLIENTS_PATH + '/' + id);
-}
-
-export function createOrUpdateClient(id, data, callback) {
-  if (!id) {
-    InstanceAPI.post(callback, data, CLIENTS_PATH);
-  } else {
-    InstanceAPI.patch(callback, data, CLIENTS_PATH + '/' + id);
+class ClientService {
+  constructor() {
+    this.CLIENTS_PATH = '/clients';
   }
+
+  fetchClients = async () => {
+    const response = await api.get(this.CLIENTS_PATH);
+    return response?.data;
+  };
+
+  fetchClient = async id => {
+    const response = await api.get(`${this.CLIENTS_PATH}/${id}`);
+    return response?.data;
+  };
+
+  createOrUpdateClient = async (id, data) => {
+    return !id
+      ? await api.post(this.CLIENTS_PATH, data)
+      : await api.patch(`${this.CLIENTS_PATH}/${id}`, data);
+  };
+
+  deleteClient = async id => {
+    return await api.delete(`${this.CLIENTS_PATH}/${id}`);
+  };
 }
 
-export function deleteClient(id, callback) {
-  InstanceAPI.delete(callback, CLIENTS_PATH + '/' + id);
-}
+export const clientService = new ClientService();

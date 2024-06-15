@@ -1,7 +1,4 @@
-import ClientForm from '../components/ClientForm/index.js';
+import { ClientForm } from '../components/ClientForm';
 
-function ClientFormPage(clubId, clientId) {
-  return ClientForm(clubId, clientId);
-}
-
-export default ClientFormPage;
+export const ClientFormPage = (clubId, clientId) =>
+  new ClientForm(clubId, clientId).render();
