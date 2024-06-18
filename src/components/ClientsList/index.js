@@ -1,17 +1,31 @@
 import { clientService } from '../../api/clients';
-import { AlertToast } from '../../shared/utils/alertToast';
+import { toast } from '../AlertToast';
 
 export class ClientsList {
+  #parentNode = $(`<div id="clientsList" class="list-group"></div>`);
+
   constructor(clubId) {
     this.clubId = clubId;
-    this.parentNode = $(`<div id="clientsList" class="list-group"></div>`);
   }
-  handleFetchClients = async () => {
-    const clients = await clientService.fetchClients();
-    this.renderClients(clients);
+
+  render = () => {
+    this.#handleFetchClients();
+    return $('<div></div>')
+      .append(
+        $(
+          `<a href="#clubs/${this.clubId}/clients/create" class="btn btn-primary ms-auto me-auto mb-5">Create Client</a>`
+        )
+      )
+      .append(this.#parentNode);
   };
-  renderClients = (clients = []) => {
-    this.parentNode.html('');
+
+  #handleFetchClients = async () => {
+    const clients = await clientService.fetchClients();
+    this.#renderClients(clients);
+  };
+
+  #renderClients = (clients = []) => {
+    this.#parentNode.html('');
     clients.forEach(client => {
       if (client.clubId === this.clubId) {
         const clientCard = $(
@@ -34,26 +48,16 @@ export class ClientsList {
               `<button type="button" class="btn btn-danger">Delete</button>`
             ).on('click', async () => {
               await clientService.deleteClient(client.id).then(response => {
-                new AlertToast(
-                  `Client: ${response.data.firstName} ${response.data.lastName}, successfully deleted!`
-                ).show();
+                toast.show(
+                  `Client: ${response.data.firstName} ${response.data.lastName}, successfully deleted!`,
+                  'success'
+                );
               });
-              this.handleFetchClients();
+              this.#handleFetchClients();
             })
           );
-        this.parentNode.append(clientCard);
+        this.#parentNode.append(clientCard);
       }
     });
-  };
-
-  render = () => {
-    this.handleFetchClients();
-    return $('<div></div>')
-      .append(
-        $(
-          `<a href="#clubs/${this.clubId}/clients/create" class="btn btn-primary ms-auto me-auto mb-5">Create Client</a>`
-        )
-      )
-      .append(this.parentNode);
   };
 }

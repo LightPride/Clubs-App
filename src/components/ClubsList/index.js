@@ -1,19 +1,27 @@
 import { clubService } from '../../api/clubs';
-import { AlertToast } from '../../shared/utils/alertToast';
+import { toast } from '../AlertToast';
 
 export class ClubsList {
-  constructor() {
-    this.parentNode = $(
-      `<div id="catalogue" class="row row-cols-1 row-cols-md-3 g-4"></div>`
-    );
-  }
-  handleFetchClubs = async () => {
-    const clubs = await clubService.fetchClubs();
-    this.renderCatalogue(clubs);
+  #parentNode = $(
+    `<div id="catalogue" class="row row-cols-1 row-cols-md-3 g-4"></div>`
+  );
+
+  render = () => {
+    this.#handleFetchClubs();
+    return $(`<div></div>`)
+      .append(
+        `<a href="#clubs/create" class="btn btn-primary ms-auto me-auto mb-5">Create Club</a>`
+      )
+      .append(this.#parentNode);
   };
 
-  renderCatalogue = (clubs = []) => {
-    this.parentNode.html('');
+  #handleFetchClubs = async () => {
+    const clubs = await clubService.fetchClubs();
+    this.#renderCatalogue(clubs);
+  };
+
+  #renderCatalogue = (clubs = []) => {
+    this.#parentNode.html('');
     clubs.forEach(club => {
       const clubCard = $(`<div id="${club.id}"></div>`).append(
         $(`<div class="card"></div>`).append(
@@ -40,25 +48,17 @@ export class ClubsList {
                 `<button type="button" class="btn btn-primary">Delete</button>`
               ).on('click', async () => {
                 await clubService.deleteClub(club.id).then(response => {
-                  new AlertToast(
-                    `Club: ${response.data.name}, successfully deleted!`
-                  ).show();
+                  toast.show(
+                    `Club: ${response.data.name}, successfully deleted!`,
+                    'success'
+                  );
                 });
-                this.handleFetchClubs();
+                this.#handleFetchClubs();
               })
             )
         )
       );
-      this.parentNode.append(clubCard);
+      this.#parentNode.append(clubCard);
     });
-  };
-
-  render = () => {
-    this.handleFetchClubs();
-    return $(`<div></div>`)
-      .append(
-        `<a href="#clubs/create" class="btn btn-primary ms-auto me-auto mb-5">Create Club</a>`
-      )
-      .append(this.parentNode);
   };
 }

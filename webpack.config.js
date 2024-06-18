@@ -1,7 +1,7 @@
 const path = require('node:path');
 const autoprefixer = require('autoprefixer');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const webpack = require('webpack');
+const { ProvidePlugin } = require('webpack');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const { EsbuildPlugin } = require('esbuild-loader');
 
@@ -19,7 +19,7 @@ module.exports = env => {
     optimization: {
       minimizer: [
         new EsbuildPlugin({
-          target: 'es2022',
+          minify: true,
           css: true,
         }),
       ],
@@ -28,7 +28,7 @@ module.exports = env => {
       new HtmlWebpackPlugin({
         template: path.resolve(__dirname, 'index.html'),
       }),
-      new webpack.ProvidePlugin({
+      new ProvidePlugin({
         $: 'jquery',
         jQuery: 'jquery',
         'window.jQuery': 'jquery',

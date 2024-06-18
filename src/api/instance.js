@@ -1,5 +1,6 @@
 import axios from 'axios';
-import { AlertToast } from '../shared/utils/alertToast';
+import { toast } from '../components/AlertToast';
+import { HttpCodes } from '../shared/constants';
 
 export const api = axios.create({
   baseURL: 'http://localhost:3000',
@@ -7,13 +8,13 @@ export const api = axios.create({
 
 api.interceptors.response.use(undefined, error => {
   if (error?.code === 'ERR_NETWORK') {
-    new AlertToast("Server is not responding, check if it's enabled!").show();
+    toast.show("Server is not responding, check if it's enabled!", 'warning');
   }
-  if (error?.response?.status === 404) {
+  if (error?.response?.status === HttpCodes.NOT_FOUND) {
     window.history.replaceState(null, '', '#not-found');
     window.dispatchEvent(new HashChangeEvent('hashchange'));
   }
-  if (error?.response?.status === 500) {
-    new AlertToast('Server error - check the terminal for more info').show();
+  if (error?.response?.status === HttpCodes.INTERNAL_SERVER_ERROR) {
+    toast.show('Server error - check the terminal for more info', 'warning');
   }
 });
