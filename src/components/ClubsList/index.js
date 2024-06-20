@@ -47,12 +47,9 @@ export class ClubsList {
               $(
                 `<button type="button" class="btn btn-primary">Delete</button>`
               ).on('click', async () => {
-                await clubService.deleteClub(club.id).then(response => {
-                  toast.show(
-                    `Club: ${response.data.name}, successfully deleted!`,
-                    'success'
-                  );
-                });
+                await clubService.deleteClub(club.id);
+                toast.showSuccess(`Club: ${club.name}, successfully deleted!`);
+
                 this.#handleFetchClubs();
               })
             )

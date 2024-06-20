@@ -15,7 +15,7 @@ class Router {
   init(parentNode) {
     window.addEventListener('hashchange', () => this.#route(parentNode));
     this.#route(parentNode).catch(error => {
-      toast.show(`Error: ${error.message}`, 'warning');
+      toast.showError(`Error: ${error.message}`);
     });
     return parentNode;
   }

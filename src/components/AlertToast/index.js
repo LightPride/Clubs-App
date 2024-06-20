@@ -12,22 +12,18 @@ export class AlertToast {
     toastBootstrap.show();
   }
 
-  #render(message, status) {
-    let background;
-    switch (status) {
-      case 'success':
-        background = 'bg-success';
-        break;
-      case 'warning':
-        background = 'bg-danger';
-        break;
+  showSuccess(message) {
+    this.show(message, 'bg-success');
+  }
 
-      default:
-        break;
-    }
+  showError(message) {
+    this.show(message, 'bg-danger');
+  }
+
+  #render(message, status = 'bg-light') {
     return $(`
   <div id="liveToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true" data-bs-delay="6000">
-    <div class="toast-header ${background}">
+    <div class="toast-header ${status}">
       <strong class="me-auto">Alert</strong>
       <small>Now</small>
       <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>

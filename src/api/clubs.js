@@ -14,9 +14,10 @@ class ClubService {
   }
 
   async createOrUpdateClub(id, data) {
-    return !id
+    const response = !id
       ? await api.post(this.#CLUBS_PATH, data)
       : await api.patch(`${this.#CLUBS_PATH}/${id}`, data);
+    return response?.data;
   }
 
   async deleteClub(id) {

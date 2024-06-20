@@ -63,12 +63,10 @@ export class ClubsForm {
       location: clubLocationValue.trim(),
     };
 
-    await clubService.createOrUpdateClub(this.clubId, data).then(response => {
-      toast.show(
-        `Club: ${response.data.name}, successfully ${this.clubId ? `updated` : `created`}!`,
-        'success'
-      );
-    });
+    const club = await clubService.createOrUpdateClub(this.clubId, data);
+    toast.showSuccess(
+      `Club: ${club.name}, successfully ${this.clubId ? `updated` : `created`}!`
+    );
 
     window.location.hash = '#clubs';
   };

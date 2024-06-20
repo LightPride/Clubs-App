@@ -84,14 +84,14 @@ export class ClientForm {
       clubId: this.clubId,
     };
 
-    await clientService
-      .createOrUpdateClient(this.clientId, data)
-      .then(response => {
-        toast.show(
-          `Client: ${response.data.firstName} ${response.data.lastName}, successfully ${this.clientId ? 'updated' : 'added'}!`,
-          'success'
-        );
-      });
+    const client = await clientService.createOrUpdateClient(
+      this.clientId,
+      data
+    );
+
+    toast.showSuccess(
+      `Client: ${client.firstName} ${client.lastName}, successfully ${this.clientId ? 'updated' : 'added'}!`
+    );
 
     window.location.hash = `#clubs/${this.clubId}/clients`;
   };

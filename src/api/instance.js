@@ -8,13 +8,13 @@ export const api = axios.create({
 
 api.interceptors.response.use(undefined, error => {
   if (error?.code === 'ERR_NETWORK') {
-    toast.show("Server is not responding, check if it's enabled!", 'warning');
+    toast.showError("Server is not responding, check if it's enabled!");
   }
   if (error?.response?.status === HttpCodes.NOT_FOUND) {
     window.history.replaceState(null, '', '#not-found');
     window.dispatchEvent(new HashChangeEvent('hashchange'));
   }
   if (error?.response?.status === HttpCodes.INTERNAL_SERVER_ERROR) {
-    toast.show('Server error - check the terminal for more info', 'warning');
+    toast.showError('Server error - check the terminal for more info');
   }
 });

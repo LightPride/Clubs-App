@@ -14,9 +14,10 @@ class ClientService {
   }
 
   async createOrUpdateClient(id, data) {
-    return !id
+    const response = !id
       ? await api.post(this.#CLIENTS_PATH, data)
       : await api.patch(`${this.#CLIENTS_PATH}/${id}`, data);
+    return response?.data;
   }
 
   async deleteClient(id) {

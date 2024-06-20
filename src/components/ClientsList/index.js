@@ -47,12 +47,11 @@ export class ClientsList {
             $(
               `<button type="button" class="btn btn-danger">Delete</button>`
             ).on('click', async () => {
-              await clientService.deleteClient(client.id).then(response => {
-                toast.show(
-                  `Client: ${response.data.firstName} ${response.data.lastName}, successfully deleted!`,
-                  'success'
-                );
-              });
+              await clientService.deleteClient(client.id);
+              toast.showSuccess(
+                `Client: ${client.firstName} ${client.lastName}, successfully deleted!`
+              );
+
               this.#handleFetchClients();
             })
           );
