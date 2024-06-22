@@ -1,8 +1,6 @@
-function countAge(birthDateValue) {
-  var unixYear = 1970;
-  var diff = Date.now() - new Date(birthDateValue).getTime();
+export const countAge = birthDateValue => {
+  const unixYear = 1970;
+  const diff = Date.now() - new Date(birthDateValue).getTime();
 
   return new Date(diff).getUTCFullYear() - unixYear;
-}
-
-export default countAge;
+};

@@ -1,7 +1,3 @@
-import ClubsForm from '../components/СlubsForm/index.js';
+import { ClubsForm } from '../components/СlubsForm';
 
-function ClubsFormPage(clubId) {
-  return ClubsForm(clubId);
-}
-
-export default ClubsFormPage;
+export const ClubsFormPage = clubId => new ClubsForm(clubId).render();

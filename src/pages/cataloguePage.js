@@ -1,13 +1,3 @@
-import ClubsCatalogue from '../components/ClubsList/index.js';
+import { ClubsList } from '../components/ClubsList';
 
-function CataloguePage() {
-  return $('<div></div>')
-    .append(
-      $(
-        '<a href="#clubs/create" class="btn btn-primary ms-auto me-auto mb-5">Create Club</a>'
-      )
-    )
-    .append(ClubsCatalogue);
-}
-
-export default CataloguePage;
+export const CataloguePage = () => new ClubsList().render();

@@ -2,16 +2,15 @@ module.exports = {
   env: {
     browser: true,
     jquery: true,
-    es6: false,
+    es6: true,
   },
-  extends: ['eslint:recommended'],
+  extends: [require.resolve('@vercel/style-guide/eslint/browser')],
   parserOptions: {
-    ecmaVersion: 2015,
+    ecmaVersion: 2022,
     sourceType: 'module',
   },
   plugins: ['jquery'],
   rules: {
-    'no-var': 'off',
-    'prefer-const': 'off',
+    'unicorn/filename-case': 'off',
   },
 };

@@ -1,53 +1,61 @@
-var Router = {
-  routes: [],
-  notFoundRoute: null,
-  init: function (parentNode) {
-    window.addEventListener('hashchange', this.route.bind(this, parentNode));
-    this.route(parentNode);
+import { toast } from '../../../components/AlertToast';
+
+class Router {
+  #routes = [];
+  #notFoundRoute = null;
+
+  register(path, callback) {
+    if (path === 'not-found') {
+      this.#notFoundRoute = { path, callback };
+    } else {
+      this.#routes.push({ path, callback });
+    }
+  }
+
+  init(parentNode) {
+    window.addEventListener('hashchange', () => this.#route(parentNode));
+    this.#route(parentNode).catch(error => {
+      toast.showError(`Error: ${error.message}`);
+    });
     return parentNode;
-  },
-  route: function (parentNode) {
-    var hash = window.location.hash.slice(1);
-    var parts = hash.split('/');
+  }
 
-    for (var i = 0; i < this.routes.length; i++) {
-      var match = this.matchRoute(parts, this.routes[i]);
+  async #route(parentNode) {
+    const hash = window.location.hash.slice(1);
+    const parts = hash.split('/');
+
+    for (const route of this.#routes) {
+      const match = this.#matchRoute(parts, route);
       if (match) {
-        parentNode.html(this.routes[i].callback.apply(null, match.params));
-
+        const content = await route.callback(...match.params);
+        parentNode.html(content);
         return;
       }
     }
-    if (this.notFoundRoute) {
-      parentNode.html(this.notFoundRoute.callback());
-    }
-  },
 
-  matchRoute: function (parts, route) {
-    var routeParts = route.path.split('/');
+    if (this.#notFoundRoute) {
+      const notFoundContent = this.#notFoundRoute.callback();
+      parentNode.html(notFoundContent);
+    }
+  }
+
+  #matchRoute(parts, route) {
+    const routeParts = route.path.split('/');
 
     if (routeParts.length !== parts.length) {
       return null;
     }
 
-    var params = [];
-    for (var i = 0; i < routeParts.length; i++) {
-      if (routeParts[i].charAt(0) === ':') {
-        params.push(parts[i]);
-      } else if (routeParts[i] !== parts[i]) {
+    const params = [];
+    for (const [index, part] of parts.entries()) {
+      if (routeParts[index].startsWith(':')) {
+        params.push(part);
+      } else if (routeParts[index] !== part) {
         return null;
       }
     }
-    return { params: params };
-  },
+    return { params };
+  }
+}
 
-  register: function (path, callback) {
-    if (path === 'not-found') {
-      this.notFoundRoute = { path: path, callback: callback };
-    } else {
-      this.routes.push({ path: path, callback: callback });
-    }
-  },
-};
-
-export default Router;
+export const router = new Router();

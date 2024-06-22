@@ -1,7 +1,3 @@
-import ClubItem from '../components/ClubItem/index.js';
+import { ClubItem } from '../components/ClubItem';
 
-function ClubItemPage(clubId) {
-  return ClubItem(clubId);
-}
-
-export default ClubItemPage;
+export const ClubItemPage = clubId => new ClubItem(clubId).render();

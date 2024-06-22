@@ -1,45 +1,20 @@
-var InstanceAPI = {
-  BASE_URL: 'http://localhost:3000',
+import axios from 'axios';
+import { toast } from '../components/AlertToast';
+import { HttpCodes } from '../shared/constants';
 
-  get: function (callback, path) {
-    this.request(path, callback, {
-      method: 'GET',
-    });
-  },
+export const api = axios.create({
+  baseURL: 'http://localhost:3000',
+});
 
-  post: function (callback, data, path) {
-    this.request(path, callback, {
-      method: 'POST',
-      data: JSON.stringify(data),
-    });
-  },
-
-  patch: function (callback, data, path) {
-    this.request(path, callback, {
-      method: 'PATCH',
-      data: JSON.stringify(data),
-    });
-  },
-
-  delete: function (callback, path) {
-    this.request(path, callback, {
-      method: 'DELETE',
-    });
-  },
-
-  request: function (path, callback, params) {
-    $.ajax(
-      Object.assign(params, {
-        url: this.BASE_URL + path,
-        success: callback,
-        dataType: 'json',
-        error: function (error) {
-          console.error('Error fetching data:', error);
-          alert('Server error');
-        },
-      })
-    );
-  },
-};
-
-export default InstanceAPI;
+api.interceptors.response.use(undefined, error => {
+  if (error?.code === 'ERR_NETWORK') {
+    toast.showError("Server is not responding, check if it's enabled!");
+  }
+  if (error?.response?.status === HttpCodes.NOT_FOUND) {
+    window.history.replaceState(null, '', '#not-found');
+    window.dispatchEvent(new HashChangeEvent('hashchange'));
+  }
+  if (error?.response?.status === HttpCodes.INTERNAL_SERVER_ERROR) {
+    toast.showError('Server error - check the terminal for more info');
+  }
+});

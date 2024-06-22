@@ -1,7 +1,7 @@
-import isEmpty from './isEmpty.js';
+import { isEmpty } from './isEmpty';
 
-function validateClubForm(clubNameValue, clubLocationValue) {
-  var errors = {
+export const validateClubForm = (clubNameValue, clubLocationValue) => {
+  const errors = {
     clubNameError: '',
     clubLocationError: '',
   };
@@ -15,6 +15,4 @@ function validateClubForm(clubNameValue, clubLocationValue) {
   }
 
   return errors;
-}
-
-export default validateClubForm;
+};

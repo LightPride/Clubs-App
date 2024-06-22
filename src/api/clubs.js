@@ -1,27 +1,28 @@
-import InstanceAPI from './instance.js';
+import { api } from './instance';
 
-var CLUBS_PATH = '/clubs';
+class ClubService {
+  #CLUBS_PATH = '/clubs';
 
-export function fetchClubs(callback) {
-  InstanceAPI.get(callback, CLUBS_PATH);
-}
+  async fetchClubs() {
+    const response = await api.get(this.#CLUBS_PATH);
+    return response?.data;
+  }
 
-export function fetchClub(id, callback) {
-  InstanceAPI.get(callback, CLUBS_PATH + '/' + id);
-}
+  async fetchClub(id) {
+    const response = await api.get(`${this.#CLUBS_PATH}/${id}`);
+    return response?.data;
+  }
 
-export function createOrUpdateClub(id, data, callback) {
-  if (!id) {
-    InstanceAPI.post(callback, data, CLUBS_PATH);
-  } else {
-    InstanceAPI.patch(callback, data, CLUBS_PATH + '/' + id);
+  async createOrUpdateClub(id, data) {
+    const response = !id
+      ? await api.post(this.#CLUBS_PATH, data)
+      : await api.patch(`${this.#CLUBS_PATH}/${id}`, data);
+    return response?.data;
+  }
+
+  async deleteClub(id) {
+    return await api.delete(`${this.#CLUBS_PATH}/${id}`);
   }
 }
 
-export function updateClub(id, data, callback) {
-  InstanceAPI.patch(callback, data, CLUBS_PATH + '/' + id);
-}
-
-export function deleteClub(id, callback) {
-  InstanceAPI.delete(callback, CLUBS_PATH + '/' + id);
-}
+export const clubService = new ClubService();
