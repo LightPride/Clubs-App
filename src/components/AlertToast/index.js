@@ -20,10 +20,10 @@ export class AlertToast {
     this.show(message, 'bg-danger');
   }
 
-  #render(message, status = 'bg-light') {
+  #render(message, statusClassName = 'bg-light') {
     return $(`
   <div id="liveToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true" data-bs-delay="6000">
-    <div class="toast-header ${status}">
+    <div class="toast-header ${statusClassName}">
       <strong class="me-auto">Alert</strong>
       <small>Now</small>
       <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
