@@ -1,5 +1,5 @@
-import { makeAutoObservable } from 'mobx';
-import { clubService } from '../api/clubs';
+import { makeAutoObservable } from "mobx";
+import { clubService } from "@api/clubs";
 
 class ClubStore {
   clubList = [];

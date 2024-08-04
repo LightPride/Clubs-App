@@ -3,52 +3,47 @@
     {
       "id": "0706",
       "name": "Golden Night",
-      "location": "New York"
+      "clubLocation": "New York"
     },
     {
       "id": "e53d",
       "name": "Dance Zone",
-      "location": "Los Angeles"
+      "clubLocation": "Los Angeles"
     },
     {
       "id": "a9cf",
       "name": "Night Palace",
-      "location": "Chicago"
+      "clubLocation": "Chicago"
     },
     {
       "id": "1a47",
       "name": "Drunk Arena",
-      "location": "Miami"
+      "clubLocation": "Miami"
     },
     {
       "id": "aaa2",
       "name": "Rave Mansion",
-      "location": "San Francisco"
+      "clubLocation": "San Francisco"
     },
     {
       "id": "e632",
       "name": "Premial",
-      "location": "Houston"
+      "clubLocation": "Houston"
     },
     {
       "id": "04af",
       "name": "Club Rave",
-      "location": "Dallas"
+      "clubLocation": "Dallas"
     },
     {
       "id": "4412",
       "name": "Prestige",
-      "location": "Seattle"
+      "clubLocation": "Seattle"
     },
     {
       "id": "a650",
       "name": "BYY",
-      "location": "Las Vegas"
-    },
-    {
-      "id": "465c",
-      "name": "wdaw",
-      "location": "23123123"
+      "clubLocation": "Las Vegas"
     }
   ],
   "clients": [
@@ -240,13 +235,6 @@
       "lastName": "Lopez",
       "birthDate": "2004-05-10",
       "clubId": "a650"
-    },
-    {
-      "id": "ed4b",
-      "firstName": "123123",
-      "lastName": "awdawd",
-      "birthDate": "2003-01-01",
-      "clubId": null
     }
   ]
 }

@@ -1,9 +1,10 @@
 import { makeAutoObservable } from 'mobx';
-import { clientService } from '../api/clients';
+import { clientService } from '@api/clients';
 
 class ClientStore {
   clientList = [];
   currentClient = {};
+  isLoading = false;
 
   constructor() {
     makeAutoObservable(this);
@@ -18,9 +19,11 @@ class ClientStore {
   }
 
   async fetchClients(clubId) {
+    this.isLoading = true;
     const data = await clientService.fetchClients();
-    const filteredData = data.filter(client => client.clubId === clubId);
+    const filteredData = data.filter((client) => client.clubId === clubId);
     this.setClientList(filteredData);
+    this.isLoading = false;
   }
 
   async fetchClient(clientId) {
@@ -33,7 +36,9 @@ class ClientStore {
   }
 
   async deleteClient(clientId) {
-    this.clientList = this.clientList.filter(client => client.id !== clientId);
+    this.clientList = this.clientList.filter(
+      (client) => client.id !== clientId,
+    );
     await clientService.deleteClient(clientId);
   }
 }

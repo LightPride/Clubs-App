@@ -1,34 +1,38 @@
-import { useCallback, useEffect } from "react";
-import { ClientItem } from "../ClientItem";
-import { NavLink, useParams } from "react-router-dom";
-import { toast } from "react-toastify";
-import { clientStore } from "../../stores/client.store";
-import { observer } from "mobx-react";
+import { useEffect } from 'react';
+import { ClientItem } from '../ClientItem';
+import { NavLink, useNavigate, useParams } from 'react-router-dom';
+import { toast } from 'react-toastify';
+import { Loader } from '@components/Loader';
+import { clientStore } from '@stores/client.store';
+import { observer } from 'mobx-react';
 
-export const ClientList = observer(function ClientList() {
-  const params = useParams();
-  const clubId = params.id;
+export const ClientList = observer(() => {
+  const { id: clubId } = useParams();
+  const navigate = useNavigate();
 
   useEffect(() => {
     clientStore.fetchClients(clubId);
   }, [clubId]);
 
-  const deleteContact = useCallback(async (clientId, firstName, lastName) => {
+  const deleteContact = async (clientId, firstName, lastName) => {
     await clientStore.deleteClient(clientId);
     toast.info(`Client: ${firstName} ${lastName}, successfully deleted!`);
-  }, []);
+  };
 
   return (
     <>
+      <NavLink onClick={() => navigate(-1)}>Go back</NavLink>
       <NavLink
         to={`/clubs/${clubId}/clients/create`}
         className="btn btn-primary ms-auto me-auto mb-5"
       >
         Create Client
       </NavLink>
-      {clientStore.clientList?.length > 0 ? (
+      {clientStore.isLoading ? (
+        <Loader />
+      ) : clientStore.clientList?.length > 0 ? (
         <div id="clientsList" className="list-group">
-          {clientStore.clientList.map(client => {
+          {clientStore.clientList.map((client) => {
             return (
               <ClientItem
                 key={client.id}
@@ -50,3 +54,5 @@ export const ClientList = observer(function ClientList() {
     </>
   );
 });
+
+ClientList.displayName = 'ClientList';

@@ -1,6 +1,8 @@
-export const calculateAge = birthDateValue => {
-  const unixYear = 1970;
-  const diff = Date.now() - new Date(birthDateValue).getTime();
+import { DateTime } from 'luxon';
 
-  return new Date(diff).getUTCFullYear() - unixYear;
+export const calculateAge = (birthDateValue) => {
+  const birthDate = DateTime.fromJSDate(birthDateValue);
+  const age = DateTime.now().diff(birthDate, 'years').years;
+
+  return Math.floor(age);
 };

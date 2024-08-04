@@ -1,4 +1,4 @@
-@import "../mixins/mixins";
+@import '../mixins/mixins';
 
 .not-found-background {
   position: fixed;
@@ -6,12 +6,10 @@
   left: 0;
   width: 100vw;
   height: 100vh;
-
-  background-image: url("../shared/assets/images/not-found-background.jpg");
+  background-image: url('@assets/images/not-found-background.webp');
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
-
   z-index: -1;
 }
 
