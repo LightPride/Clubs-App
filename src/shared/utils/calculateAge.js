@@ -1,8 +1,6 @@
-import { DateTime } from 'luxon';
+import { differenceInYears } from 'date-fns';
 
 export const calculateAge = (birthDateValue) => {
-  const birthDate = DateTime.fromJSDate(birthDateValue);
-  const age = DateTime.now().diff(birthDate, 'years').years;
-
-  return Math.floor(age);
+  const age = differenceInYears(new Date(), birthDateValue);
+  return age;
 };

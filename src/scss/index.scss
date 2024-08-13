@@ -1,5 +1,7 @@
-@import "bootstrap/scss/bootstrap";
-@import "./base/base";
-@import "./components/parallaxView";
-@import "./components/header";
-@import "./components/notFound";
+@import './base/base';
+@import './components/parallaxView';
+@import './components/header';
+@import './components/notFound';
+@tailwind base;
+@tailwind components;
+@tailwind utilities;

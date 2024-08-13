@@ -1,13 +1,31 @@
 import { useForm } from 'react-hook-form';
-import { NavLink, useLocation, useNavigate, useParams } from 'react-router-dom';
-import { useEffect, useRef } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
+import { useEffect } from 'react';
 import { calculateAge } from '@shared/utils/calculateAge';
 import { clientStore } from '@stores/client.store';
 import { toast } from 'react-toastify';
 import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { DateTime } from 'luxon';
-import { DATE_FORMAT } from '@shared/constants';
+import { Button } from '@components/ui/button';
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from '@components/ui/card';
+import {
+  Form,
+  FormControl,
+  FormDescription,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from '@components/ui/form';
+import { Input } from '@components/ui/input';
+import { DatePicker } from '../DatePicker';
+import { format } from 'date-fns';
 
 const clientSchema = yup.object().shape({
   firstName: yup
@@ -29,12 +47,7 @@ const clientSchema = yup.object().shape({
 });
 
 export const ClientForm = () => {
-  const {
-    register,
-    formState: { errors },
-    handleSubmit,
-    reset,
-  } = useForm({
+  const form = useForm({
     defaultValues: {
       firstName: '',
       lastName: '',
@@ -51,26 +64,24 @@ export const ClientForm = () => {
       (async () => {
         await clientStore.fetchClient(clientId);
 
-        reset({
+        form.reset({
           firstName: clientStore.currentClient?.firstName,
           lastName: clientStore.currentClient?.lastName,
-          birthDate: DateTime.fromISO(
-            clientStore.currentClient?.birthDate,
-          ).toFormat(DATE_FORMAT),
+          birthDate: new Date(clientStore.currentClient?.birthDate),
         });
       })();
     }
-  }, [reset, clientId]);
+  }, [clientId]);
 
   const onSubmit = async (inputData) => {
-    console.log(inputData.birthDate);
     const data = {
       firstName: inputData.firstName.trim(),
       lastName: inputData.lastName.trim(),
-      birthDate: DateTime.fromJSDate(inputData.birthDate).toFormat(DATE_FORMAT),
+      birthDate: format(inputData.birthDate, 'P'),
       clubId: clubId,
     };
     console.log(data.birthDate);
+
     await clientStore.createOrUpdateClient(clientId, data);
     navigate(`/clubs/${clubId}/clients`);
     toast.success(
@@ -79,57 +90,77 @@ export const ClientForm = () => {
   };
 
   return (
-    <>
-      <NavLink onClick={() => navigate(-1)}>Go back</NavLink>
-      <form onSubmit={handleSubmit(onSubmit)} id="clubForm">
-        <div className="mb-3">
-          <label htmlFor="firstName" className="form-label">
-            First Name
-            <input
-              {...register('firstName')}
-              aria-invalid={errors.firstName ? 'true' : 'false'}
-              type="text"
-              name="firstName"
-              id="firstName"
-              className="form-control"
-            />
-          </label>
-          {errors.firstName && <p role="alert">{errors.firstName.message}</p>}
-        </div>
-        <div className="mb-3">
-          <label htmlFor="lastName" className="form-label">
-            Last Name
-            <input
-              {...register('lastName')}
-              aria-invalid={errors.lastName ? 'true' : 'false'}
-              type="text"
-              name="lastName"
-              id="lastName"
-              className="form-control"
-            />
-          </label>
-          {errors.lastName && <p role="alert">{errors.lastName.message}</p>}
-        </div>
-        <div className="mb-3">
-          <label htmlFor="birthDate" className="form-label">
-            Date of birth
-            <input
-              {...register('birthDate')}
-              aria-invalid={errors.birthDate ? 'true' : 'false'}
-              type="date"
-              min="1900-01-01"
-              max={DateTime.now().toFormat(DATE_FORMAT)}
-              name="birthDate"
-              id="birthDate"
-              className="form-control"
-            />
-          </label>
-          {errors.birthDate && <p role="alert">{errors.birthDate.message}</p>}
-        </div>
-        <button type="submit" className="btn btn-primary">
-          Submit
-        </button>
-      </form>
-    </>
+    <Card className="ml-auto mr-auto w-[328px]">
+      <CardHeader>
+        <CardTitle>Add client</CardTitle>
+        <CardDescription>Add client to your club.</CardDescription>
+      </CardHeader>
+      <CardContent>
+        <Form {...form}>
+          <form onSubmit={form.handleSubmit(onSubmit)} id="clientForm">
+            <div className="grid w-full items-center gap-4">
+              <FormField
+                control={form.control}
+                name="firstName"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel className="flex text-start">
+                      First Name
+                    </FormLabel>
+                    <FormControl>
+                      <Input {...field} placeholder={clientId ? '' : 'John'} />
+                    </FormControl>
+                    <FormDescription>
+                      This is client's first name.
+                    </FormDescription>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="lastName"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel className="flex text-start">Last Name</FormLabel>
+                    <FormControl>
+                      <Input {...field} placeholder={clientId ? '' : 'Smith'} />
+                    </FormControl>
+                    <FormDescription>
+                      This is client's last name.
+                    </FormDescription>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="birthDate"
+                render={({ field }) => (
+                  <FormItem className="flex flex-col">
+                    <FormLabel className="flex text-start">
+                      Date of birth
+                    </FormLabel>
+                    <DatePicker {...field} />
+                    <FormDescription>
+                      This is client's date of birth.
+                    </FormDescription>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <Button
+                type="button"
+                onClick={() => navigate(-1)}
+                variant="outline"
+              >
+                Cancel
+              </Button>
+              <Button type="submit">Submit</Button>
+            </div>
+          </form>
+        </Form>
+      </CardContent>
+    </Card>
   );
 };

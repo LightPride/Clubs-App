@@ -14,6 +14,7 @@ export default defineConfig({
       '@shared': path.resolve(__dirname, './src/shared'),
       '@stores': path.resolve(__dirname, './src/stores'),
       '@scss': path.resolve(__dirname, './src/scss'),
+      '@lib': path.resolve(__dirname, './lib'),
     },
   },
   server: {

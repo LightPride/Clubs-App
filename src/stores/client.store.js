@@ -27,8 +27,10 @@ class ClientStore {
   }
 
   async fetchClient(clientId) {
+    this.isLoading = true;
     const data = await clientService.fetchClient(clientId);
     this.setCurrentClient(data);
+    this.isLoading = false;
   }
 
   async createOrUpdateClient(id, data) {

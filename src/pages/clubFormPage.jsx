@@ -1,5 +1,5 @@
-import { ClubsForm } from "@components/СlubsForm";
+import { ClubForm } from '@components/СlubForm';
 
 export default function ClubFormPage() {
-  return <ClubsForm />;
+  return <ClubForm />;
 }

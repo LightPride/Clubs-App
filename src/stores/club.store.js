@@ -1,9 +1,10 @@
-import { makeAutoObservable } from "mobx";
-import { clubService } from "@api/clubs";
+import { makeAutoObservable } from 'mobx';
+import { clubService } from '@api/clubs';
 
 class ClubStore {
   clubList = [];
   currentClub = {};
+  isLoading = false;
 
   constructor() {
     makeAutoObservable(this);
@@ -18,13 +19,17 @@ class ClubStore {
   }
 
   async fetchClub(clubId) {
+    this.isLoading = true;
     const data = await clubService.fetchClub(clubId);
     this.setCurrentClub(data);
+    this.isLoading = false;
   }
 
   async fetchClubs() {
+    this.isLoading = true;
     const data = await clubService.fetchClubs();
     this.setClubList(data);
+    this.isLoading = false;
   }
 
   async createOrUpdateClub(id, data) {
@@ -32,7 +37,7 @@ class ClubStore {
   }
 
   async deleteClub(clubId) {
-    this.clubList = this.clubList.filter(club => club.id !== clubId);
+    this.clubList = this.clubList.filter((club) => club.id !== clubId);
     await clubService.deleteClub(clubId);
   }
 }
