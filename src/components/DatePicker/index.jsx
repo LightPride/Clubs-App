@@ -1,3 +1,6 @@
+import { format } from 'date-fns';
+import { CalendarIcon } from 'lucide-react';
+import { forwardRef, useEffect, useState } from 'react';
 import { Button } from '@components/ui/button';
 import { Calendar } from '@components/Calendar';
 import {
@@ -6,12 +9,9 @@ import {
   PopoverTrigger,
 } from '@components/ui/popover';
 import { cn } from '@lib/utils';
-import { format } from 'date-fns';
-import { CalendarIcon } from 'lucide-react';
 import { FormControl } from '@components/ui/form';
-import { forwardRef, useEffect, useState } from 'react';
 
-export const DatePicker = forwardRef(({ ...props }, ref) => {
+export const DatePicker = forwardRef(({ ...props }) => {
   const [selectedDate, setSelectedDate] = useState(props.value || null);
 
   useEffect(() => {
@@ -24,14 +24,14 @@ export const DatePicker = forwardRef(({ ...props }, ref) => {
       <PopoverTrigger asChild>
         <FormControl>
           <Button
-            variant={'outline'}
+            variant="outline"
             className={cn(
               'justify-start text-left font-normal',
               !props.value && 'text-muted-foreground',
               props.className,
             )}
           >
-            <CalendarIcon className="mr-2 h-4 w-4" />
+            <CalendarIcon className="mr-2 size-4" />
             {props.value ? (
               format(props.value, 'PPP')
             ) : (

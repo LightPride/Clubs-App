@@ -1,19 +1,19 @@
 import { NavLink } from 'react-router-dom';
 import logo from '@assets/logo/logo.png';
 
-export const Header = () => {
+export function Header() {
   return (
     <header className="header">
       <nav className="navigation">
         <img src={logo} alt="" className="navigation__logo" />
         <ul className="navigation__list">
           <li>
-            <NavLink className="navigation__link" to={'/'}>
+            <NavLink className="navigation__link" to="/">
               Home
             </NavLink>
           </li>
           <li>
-            <NavLink className="navigation__link" to={'/clubs'} data-nav>
+            <NavLink className="navigation__link" to="/clubs" data-nav>
               Catalogue
             </NavLink>
           </li>
@@ -21,4 +21,4 @@ export const Header = () => {
       </nav>
     </header>
   );
-};
+}

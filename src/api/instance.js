@@ -1,6 +1,6 @@
 import axios from 'axios';
-import { HttpCodes } from '@shared/constants';
 import { toast } from 'react-toastify';
+import { HttpCodes } from '@shared/constants';
 
 export const api = axios.create({
   baseURL: 'http://localhost:3000',

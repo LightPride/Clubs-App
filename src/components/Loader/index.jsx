@@ -1,9 +1,9 @@
 import { ColorRing } from 'react-loader-spinner';
 
-export const Loader = () => {
+export function Loader() {
   return (
     <ColorRing
-      visible={true}
+      visible
       height="60"
       width="60"
       ariaLabel="color-ring-loading"
@@ -12,4 +12,4 @@ export const Loader = () => {
       colors={['#CE74BF', '#ED8FD0', '#F0B1E0', '#F4DAF1', '#F9EFEF']}
     />
   );
-};
+}

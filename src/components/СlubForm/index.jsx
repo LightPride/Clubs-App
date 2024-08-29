@@ -1,10 +1,10 @@
 import { useNavigate, useParams } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { useEffect } from 'react';
-import { clubStore } from '@stores/club.store';
 import { toast } from 'react-toastify';
 import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
+import { clubStore } from '@stores/club.store';
 import { Button } from '@components/ui/button';
 import {
   Card,
@@ -29,7 +29,7 @@ const clubSchema = yup.object().shape({
   clubLocation: yup.string().required('Club location is required!'),
 });
 
-export const ClubForm = () => {
+export function ClubForm() {
   const form = useForm({
     defaultValues: {
       clubName: '',
@@ -66,7 +66,7 @@ export const ClubForm = () => {
   };
 
   return (
-    <Card className="ml-auto mr-auto w-[350px]">
+    <Card className="mx-auto w-[350px]">
       <CardHeader>
         <CardTitle>Create Club</CardTitle>
         <CardDescription>Deploy your club in one-click.</CardDescription>
@@ -88,7 +88,7 @@ export const ClubForm = () => {
                       />
                     </FormControl>
                     <FormDescription>
-                      This is club's public display name.
+                      {"This is club's public display name."}
                     </FormDescription>
                     <FormMessage />
                   </FormItem>
@@ -107,7 +107,7 @@ export const ClubForm = () => {
                       />
                     </FormControl>
                     <FormDescription>
-                      This is club's public location.
+                      {"This is club's public location."}
                     </FormDescription>
                     <FormMessage />
                   </FormItem>
@@ -127,4 +127,4 @@ export const ClubForm = () => {
       </CardContent>
     </Card>
   );
-};
+}

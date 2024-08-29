@@ -1,9 +1,9 @@
 import { useEffect } from 'react';
-import { useParams } from 'react-router';
 import { observer } from 'mobx-react';
-import { clubStore } from '@stores/club.store';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { ArrowBigLeft, MoreVertical, Users } from 'lucide-react';
+import { toast } from 'react-toastify';
+import { clubStore } from '@stores/club.store';
 import { Button } from '@components/ui/button';
 import {
   Card,
@@ -21,7 +21,6 @@ import {
   DropdownMenuTrigger,
 } from '@components/ui/dropdown-menu';
 import { Separator } from '@components/ui/separator';
-import { toast } from 'react-toastify';
 
 export const ClubItem = observer(() => {
   const { id } = useParams('id');
@@ -39,16 +38,20 @@ export const ClubItem = observer(() => {
 
   return (
     <Card
-      className="overflow-hidden ml-auto mr-auto max-w-[600px]"
+      className="mx-auto max-w-[600px] overflow-hidden"
       x-chunk="dashboard-05-chunk-4"
     >
       <CardHeader className="flex flex-row items-start  bg-slate-200">
         <div className="grid gap-0.5">
           <CardTitle className="group flex items-center gap-2 text-lg">
-            Club: {clubStore.currentClub.name}
+            {clubStore.isLoading
+              ? 'Loading...'
+              : `Club: ${clubStore.currentClub.name}`}
           </CardTitle>
           <CardDescription>
-            Location: {clubStore.currentClub.clubLocation}
+            {clubStore.isLoading
+              ? 'Loading...'
+              : `Location: ${clubStore.currentClub.clubLocation}`}
           </CardDescription>
         </div>
         <div className="ml-auto flex items-center gap-1">
@@ -58,7 +61,7 @@ export const ClubItem = observer(() => {
             variant="outline"
             className="h-8 gap-1"
           >
-            <ArrowBigLeft className="h-3.5 w-3.5" />
+            <ArrowBigLeft className="size-3.5" />
             <span className="lg:sr-only xl:not-sr-only xl:whitespace-nowrap">
               Go Back
             </span>
@@ -69,15 +72,15 @@ export const ClubItem = observer(() => {
             variant="outline"
             className="h-8 gap-1"
           >
-            <Users className="h-3.5 w-3.5" />
+            <Users className="size-3.5" />
             <span className="lg:sr-only xl:not-sr-only xl:whitespace-nowrap">
               View Clients
             </span>
           </Button>
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
-              <Button size="icon" variant="outline" className="h-8 w-8">
-                <MoreVertical className="h-3.5 w-3.5" />
+              <Button size="icon" variant="outline" className="size-8">
+                <MoreVertical className="size-3.5" />
                 <span className="sr-only">More</span>
               </Button>
             </DropdownMenuTrigger>
@@ -104,7 +107,7 @@ export const ClubItem = observer(() => {
         </div>
       </CardContent>
       <CardFooter className="flex flex-row items-center border-t  bg-slate-200 px-6 py-3">
-        <div className="text-xs text-muted-foreground">
+        <div className="text-muted-foreground text-xs">
           Updated <time dateTime="2023-11-23">November 23, 2023</time>
         </div>
       </CardFooter>

@@ -1,11 +1,12 @@
 import { useForm } from 'react-hook-form';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useEffect } from 'react';
-import { calculateAge } from '@shared/utils/calculateAge';
-import { clientStore } from '@stores/client.store';
 import { toast } from 'react-toastify';
 import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
+import { format } from 'date-fns';
+import { calculateAge } from '@shared/utils/calculateAge';
+import { clientStore } from '@stores/client.store';
 import { Button } from '@components/ui/button';
 import {
   Card,
@@ -25,7 +26,6 @@ import {
 } from '@components/ui/form';
 import { Input } from '@components/ui/input';
 import { DatePicker } from '../DatePicker';
-import { format } from 'date-fns';
 
 const clientSchema = yup.object().shape({
   firstName: yup
@@ -46,7 +46,7 @@ const clientSchema = yup.object().shape({
     ),
 });
 
-export const ClientForm = () => {
+export function ClientForm() {
   const form = useForm({
     defaultValues: {
       firstName: '',
@@ -78,9 +78,8 @@ export const ClientForm = () => {
       firstName: inputData.firstName.trim(),
       lastName: inputData.lastName.trim(),
       birthDate: format(inputData.birthDate, 'P'),
-      clubId: clubId,
+      clubId,
     };
-    console.log(data.birthDate);
 
     await clientStore.createOrUpdateClient(clientId, data);
     navigate(`/clubs/${clubId}/clients`);
@@ -90,7 +89,7 @@ export const ClientForm = () => {
   };
 
   return (
-    <Card className="ml-auto mr-auto w-[328px]">
+    <Card className="mx-auto w-[328px]">
       <CardHeader>
         <CardTitle>Add client</CardTitle>
         <CardDescription>Add client to your club.</CardDescription>
@@ -111,7 +110,7 @@ export const ClientForm = () => {
                       <Input {...field} placeholder={clientId ? '' : 'John'} />
                     </FormControl>
                     <FormDescription>
-                      This is client's first name.
+                      {"This is client's first name."}
                     </FormDescription>
                     <FormMessage />
                   </FormItem>
@@ -127,7 +126,7 @@ export const ClientForm = () => {
                       <Input {...field} placeholder={clientId ? '' : 'Smith'} />
                     </FormControl>
                     <FormDescription>
-                      This is client's last name.
+                      {"This is client's last name."}
                     </FormDescription>
                     <FormMessage />
                   </FormItem>
@@ -143,7 +142,7 @@ export const ClientForm = () => {
                     </FormLabel>
                     <DatePicker {...field} />
                     <FormDescription>
-                      This is client's date of birth.
+                      {"This is client's date of birth."}
                     </FormDescription>
                     <FormMessage />
                   </FormItem>
@@ -163,4 +162,4 @@ export const ClientForm = () => {
       </CardContent>
     </Card>
   );
-};
+}

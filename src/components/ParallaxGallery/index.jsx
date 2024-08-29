@@ -4,7 +4,7 @@ import { parallaxCollection } from '@shared/collections/parallaxCollection';
 import background from '@assets/images/background.webp';
 import fogBig from '@assets/images/fog-big.webp';
 
-export const ParallaxGallery = () => {
+export function ParallaxGallery() {
   const [xy, setXY] = useState([0, 0]);
 
   const handleMouseMove = (e) => {
@@ -29,4 +29,4 @@ export const ParallaxGallery = () => {
       </div>
     </div>
   );
-};
+}

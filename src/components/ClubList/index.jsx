@@ -2,6 +2,7 @@ import { useEffect } from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { observer } from 'mobx-react';
+import { MoreHorizontal, PlusCircle } from 'lucide-react';
 import { clubStore } from '@stores/club.store';
 import { Badge } from '@components/ui/badge';
 import { Button } from '@components/ui/button';
@@ -28,7 +29,6 @@ import {
   TableHeader,
   TableRow,
 } from '@components/ui/table';
-import { MoreHorizontal, PlusCircle } from 'lucide-react';
 import { Loader } from '@components/Loader';
 
 export const ClubList = observer(() => {
@@ -43,34 +43,34 @@ export const ClubList = observer(() => {
   };
 
   return (
-    <>
-      <Card className="ml-auto mr-auto max-w-[1200px]">
-        <CardHeader>
-          <CardTitle>Clubs</CardTitle>
-          <CardDescription>
-            Manage your clubs and view their clients
-          </CardDescription>
-          <Button
-            onClick={() => navigate('/clubs/create')}
-            size="sm"
-            className="ml-auto mr-auto h-8 w-[160px] gap-1"
-          >
-            <PlusCircle className="h-3.5 w-3.5" />
-            <span className="sr-only sm:not-sr-only sm:whitespace-nowrap">
-              Add Product
-            </span>
-          </Button>
-        </CardHeader>
-        <CardContent>
-          {clubStore.isLoading ? (
-            <Loader />
-          ) : clubStore.clubList?.length > 0 ? (
+    <Card className="mx-auto max-w-[1200px]">
+      <CardHeader>
+        <CardTitle>Clubs</CardTitle>
+        <CardDescription>
+          Manage your clubs and view their clients
+        </CardDescription>
+        <Button
+          onClick={() => navigate('/clubs/create')}
+          size="sm"
+          className="mx-auto h-8 w-[160px] gap-1"
+        >
+          <PlusCircle className="size-3.5" />
+          <span className="sr-only sm:not-sr-only sm:whitespace-nowrap">
+            Add Product
+          </span>
+        </Button>
+      </CardHeader>
+      <CardContent>
+        {clubStore.isLoading ? (
+          <Loader />
+        ) : (
+          clubStore.clubList?.length > 0 && (
             <Table>
               <TableHeader>
                 <TableRow>
                   <TableHead className="text-center">Name</TableHead>
                   <TableHead className="text-center">Location</TableHead>
-                  <TableHead className="text-center"></TableHead>
+                  <TableHead className="text-center" />
                 </TableRow>
               </TableHeader>
               <TableBody>
@@ -88,7 +88,7 @@ export const ClubList = observer(() => {
                       <TableCell>
                         <Badge variant="outline">{clubLocation}</Badge>
                       </TableCell>
-                      <TableCell className="hidden md:table-cell"></TableCell>
+                      <TableCell className="hidden md:table-cell" />
                       <TableCell>
                         <DropdownMenu>
                           <DropdownMenuTrigger asChild>
@@ -97,7 +97,7 @@ export const ClubList = observer(() => {
                               size="icon"
                               variant="ghost"
                             >
-                              <MoreHorizontal className="h-4 w-4" />
+                              <MoreHorizontal className="size-4" />
                               <span className="sr-only">Toggle menu</span>
                             </Button>
                           </DropdownMenuTrigger>
@@ -130,19 +130,18 @@ export const ClubList = observer(() => {
                 })}
               </TableBody>
             </Table>
-          ) : (
-            <div className="w-100 ml-auto mr-auto">
-              You don't have any clubs yet!
-            </div>
-          )}
-        </CardContent>
-        <CardFooter>
-          <div className="text-xs text-muted-foreground">
-            Showing <strong>{clubStore.clubList?.length ?? 0}</strong> clubs
-          </div>
-        </CardFooter>
-      </Card>
-    </>
+          )
+        )}
+        {clubStore.clubList?.length <= 0 && !clubStore.isLoading && (
+          <div className="w-100 mx-auto">{"You don't have any clubs yet!"}</div>
+        )}
+      </CardContent>
+      <CardFooter>
+        <div className="text-muted-foreground text-xs">
+          Showing <strong>{clubStore.clubList?.length ?? 0}</strong> clubs
+        </div>
+      </CardFooter>
+    </Card>
   );
 });
 

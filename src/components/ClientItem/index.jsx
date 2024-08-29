@@ -1,17 +1,17 @@
 import { useNavigate } from 'react-router-dom';
-import { TableCell, TableRow } from '@components/ui/table';
 import { PenLine, Trash2 } from 'lucide-react';
-import { Button } from '@components/ui/button';
 import { format } from 'date-fns';
+import { TableCell, TableRow } from '@components/ui/table';
+import { Button } from '@components/ui/button';
 
-export const ClientItem = ({
+export function ClientItem({
   firstName,
   lastName,
   birthDate,
   id,
   clubId,
   onDeleteClient,
-}) => {
+}) {
   const navigate = useNavigate();
   return (
     <TableRow>
@@ -26,7 +26,7 @@ export const ClientItem = ({
             size="sm"
             className="h-10 w-[50px]"
           >
-            <PenLine className="h-4 w-4" />
+            <PenLine className="size-4" />
           </Button>
           <Button
             onClick={() => {
@@ -41,4 +41,4 @@ export const ClientItem = ({
       </TableCell>
     </TableRow>
   );
-};
+}
