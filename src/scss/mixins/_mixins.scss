@@ -1,0 +1,16 @@
+@mixin absolute-position($z-index, $width, $top, $left, $translate: false) {
+  position: absolute;
+  z-index: $z-index;
+  width: $width;
+  top: $top;
+  left: $left;
+  @if $translate {
+    transform: translate(-50%, -50%);
+  }
+}
+
+@mixin font-sizing($font-weight, $font-size, $line-height) {
+  font-weight: $font-weight;
+  font-size: $font-size;
+  line-height: $line-height;
+}

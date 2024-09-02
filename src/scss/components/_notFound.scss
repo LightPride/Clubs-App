@@ -1,0 +1,19 @@
+@import '../mixins/mixins';
+
+.not-found-background {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-image: url('@assets/images/not-found-background.webp');
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  z-index: -1;
+}
+
+.not-found-container {
+  @include absolute-position(false, false, 50%, 50%, true);
+  margin: 0;
+}
